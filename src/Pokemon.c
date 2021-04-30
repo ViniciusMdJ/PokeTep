@@ -29,8 +29,10 @@ return poke;
 }
 
 void DestroyPokemon(tPokemon* Pokemon){
-    free(Pokemon->nome);
-    free(Pokemon);
+    for(Pokemon = Pokemon; Pokemon != NULL; Pokemon = Pokemon->prox){
+        free(Pokemon->nome);
+        free(Pokemon);    
+    }
 }
 /* func ataq devolve int(uma para calc o dano e outra para aplicar) ou void(passar point alvo)
  * salvar pokes padrao vet
