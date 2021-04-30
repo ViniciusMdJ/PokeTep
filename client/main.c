@@ -1,19 +1,11 @@
-#include "../include/Jogador.h"
-#include "../include/Pontuacao.h"
+#include "../include/Pokemon.h"
 
 int main(int argc, char *argv[]){
-    tJogador *player;
-    player = newPlayer();
-    imprimeJogador(player);
-
-    char caminho[] = "data/pontuacao.txt";
-    imprimePontuacao(caminho);
-    printf("\n\n");
-    //addNewPontuacao(28, "c", caminho);
-
-    destroyJogador(player);
-
-
+    tPokemon* Lista;
+    Lista = FillPoke();
+    for(int i = 0; i < 6; i++){
+        printf("%s\n", ReturnNome(Lista + i));
+    }
 
 return 0;
 }
