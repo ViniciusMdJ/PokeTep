@@ -79,8 +79,8 @@ float ReturnHPmax(tPokemon* Poke){
 float* ReturnHPatual(tPokemon* Poke){
     return &Poke->HPatual;
 }
-int ReturnTipo(tPokemon* Poke, int i){
-    return Poke[i].tipo;
+int ReturnTipo(tPokemon* Poke){
+    return Poke->tipo;
 }
 
 void DestroyPokemon(tPokemon* Pokemon){

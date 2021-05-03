@@ -9,7 +9,7 @@ typedef struct pokemon tPokemon;
 
 void DestroyPokemon(tPokemon* Pokemon);
 
-tPokemon* FillPoke();
+tPokemon* ListaPoke();
 
 char* ReturnNome(tPokemon* Poke, int i);
 
@@ -21,5 +21,5 @@ float ReturnHPmax(tPokemon* Poke);
 
 float* ReturnHPatual(tPokemon* Poke);
 
-int ReturnTipo(tPokemon* Poke, int i);
+int ReturnTipo(tPokemon* Poke);
 #endif
