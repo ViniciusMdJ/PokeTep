@@ -56,26 +56,6 @@ void DestroyPokemon(tPokemon* Pokemon){
  * struct ataq? salvar os ataqs no tPokemon ou em um vetor
  * */
 
-char* ReturnNome(tPokemon* Poke){
-    return Poke->nome;
-}
-
-float ReturnAtaque(tPokemon* Poke){
-    return Poke->ataque;
-}
-
-float ReturnDefesa(tPokemon* Poke){
-    return Poke->defesa;
-}
-
-float ReturnHPmax(tPokemon* Poke){
-    return Poke->HPmax;
-}
-
-float* ReturnHPatual(tPokemon* Poke){
-    return &Poke->HPatual;
-}
-
 void Movimento_0(tPokemon *poke1, tPokemon *poke2){
     fptrAtaque x = poke1->movimentos[0];
     x(poke1, poke1->mts[0], poke2);
