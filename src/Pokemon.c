@@ -1,9 +1,9 @@
 #include "../include/Pokemon.h"
 
-enum TipoP{eletrico, fogo, agua, planta, metal, psiquico};
+enum eTipoP{eletrico, fogo, agua, planta, metal, psiquico};
 
 typedef struct pokemon {
-    char nome[20];
+    char* nome;
     int tipo;
     int dormindo;
     int queimando;
@@ -13,7 +13,6 @@ typedef struct pokemon {
     float defesa;
     float HPmax;
     float HPatual;
-    tPokemon* prox;
     //- ponteiro de função de ataques
 }tPokemon;
 
@@ -31,63 +30,56 @@ typedef struct pokemon {
 return poke;
 }*/
 
-void DestroyPokemon(tPokemon* Pokemon){
-    free(Pokemon);
-}
 
-tPokemon* FillPoke(){
-    int i;
-    tPokemon* Lista;
-    Lista = (tPokemon*)calloc(6, sizeof(tPokemon));
-
-    for(i = 0; i < 6; i++){
-        if(i == 0){
-            strcpy(Lista[0].nome, "Picachu");
-            Lista[0].tipo = eletrico;
-            Lista[0].ataque = 110;
-            Lista[0].defesa = 100;
-            Lista[0].HPmax = 200;
-        }
-        else if(i == 1){
-            strcpy(Lista[1].nome, "Charizard");
-            Lista[1].tipo = fogo;
-            Lista[1].ataque = 160;
-            Lista[1].defesa = 150;
-            Lista[1].HPmax = 260;
-        }
-        else if(i == 2){
-            strcpy(Lista[2].nome, "Blastoise");
-            Lista[2].tipo = agua;
-            Lista[2].ataque = 180;
-            Lista[2].defesa = 200;
-            Lista[2].HPmax = 280;
-        }
-        else if(i == 3){
-            strcpy(Lista[3].nome, "Venusaur");
-            Lista[3].tipo = planta;
-            Lista[3].ataque = 160;
-            Lista[3].defesa = 160;
-            Lista[3].HPmax = 300;
-        }
-        else if(i == 4){
-            strcpy(Lista[4].nome, "Steelix");
-            Lista[4].tipo = metal;
-            Lista[4].ataque = 170;
-            Lista[4].defesa = 400;
-            Lista[4].HPmax = 280;
-        }
-        else if(i == 5){
-            strcpy(Lista[5].nome, "Mew");
-            Lista[5].tipo = psiquico;
-            Lista[5].ataque = 200;
-            Lista[5].defesa = 200;
-            Lista[5].HPmax = 320;
-        }
+tPokemon* ListaPoke(int i){
+    tPokemon* Poke;
+    Poke = malloc(sizeof(tPokemon));
+    if(i == 0){
+        Poke->nome = "Picachu";
+        Poke->tipo = eletrico;
+        Poke->ataque = 110;
+        Poke->defesa = 100;
+        Poke->HPmax = 200;
     }
-return Lista;
+    else if(i == 1){
+        Poke->nome = "Charizard";
+        Poke->tipo = fogo;
+        Poke->ataque = 160;
+        Poke->defesa = 150;
+        Poke->HPmax = 260;
+    }
+    else if(i == 2){
+        Poke->nome = "Blastoise";
+        Poke->tipo = agua;
+        Poke->ataque = 180;
+        Poke->defesa = 200;
+        Poke->HPmax = 280;
+    }
+    else if(i == 3){
+        Poke->nome = "Venusaur";
+        Poke->tipo = planta;
+        Poke->ataque = 160;
+        Poke->defesa = 160;
+        Poke->HPmax = 300;
+    }
+    else if(i == 4){
+        Poke->nome = "Steelix";
+        Poke->tipo = metal;
+        Poke->ataque = 170;
+        Poke->defesa = 400;
+        Poke->HPmax = 280;
+    }
+    else if(i == 5){
+        Poke->nome = "Mew";
+        Poke->tipo = psiquico;
+        Poke->ataque = 200;
+        Poke->defesa = 200;
+        Poke->HPmax = 320;
+    }
+return Poke;
 }
-char* ReturnNome(tPokemon* Poke){
-    return Poke->nome;
+char* ReturnNome(tPokemon* Poke, int i){
+    return Poke[i].nome;
 }
 float ReturnAtaque(tPokemon* Poke){
     return Poke->ataque;
@@ -100,4 +92,11 @@ float ReturnHPmax(tPokemon* Poke){
 }
 float* ReturnHPatual(tPokemon* Poke){
     return &Poke->HPatual;
+}
+int ReturnTipo(tPokemon* Poke, int i){
+    return Poke[i].tipo;
+}
+
+void DestroyPokemon(tPokemon* Pokemon){
+    free(Pokemon);
 }
