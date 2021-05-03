@@ -1,46 +1,74 @@
 #ifndef ATAQUES_H
 #define ATAQUES_H
 
-#include "Pokemon.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
 
+typedef void (*fptrAtaque)(void *poke1, int pos, void *poke2);
 
-Dano = ((14*poder*A/D)/50 + 2) * modificador
-modificador = critico*MT*tipo
-float Dano(tPokemon *atacante, int poder, float chance, tPokemon *defensor);
+typedef struct Ataque tAtaque;
 
-float Modificador(float mt, float chance, float relacao);
+float Dano(void *poke1, int poder, void *poke2);
 
-void ChoquedoTrovao(tPokemon *atacante, int pos, float chance, tPokemon *defensor);
+float Modificador(float mt, float relacao);
 
-void OndadeChoque(tPokemon *atacante, int pos, float chance, tPokemon *defensor);
+void ChoquedoTrovao(void *poke1, int pos, void *poke2);
 
-void Bater(tPokemon *atacante, int pos, float chance, tPokemon *defensor);
+void OndadeChoque(void *poke1, int pos, void *poke2);
 
-void LancaChamas(tPokemon *atacante, int pos, float chance, tPokemon *defensor);
+void Bater(void *poke1, int pos, void *poke2);
 
-void Dormir(tPokemon *atacante, int pos, float chance, tPokemon *defensor);
+void LancaChamas(void *poke1, int pos, void *poke2);
 
-void ArmadeAgua(tPokemon *atacante, int pos, float chance, tPokemon *defensor);
+void Dormir(void *poke1, int pos, void *poke2);
 
-void Proteger(tPokemon *atacante, int pos, float chance, tPokemon *defensor);
+void ArmadeAgua(void *poke1, int pos, void *poke2);
 
-void PodeSono(tPokemon *atacante, int pos, float chance, tPokemon *defensor);
+void Proteger(void *poke1, int pos, void *poke2);
 
-void BombadeSemente(tPokemon *atacante, int pos, float chance, tPokemon *defensor);
+void PodeSono(void *poke1, int pos, void *poke2);
 
-void DoisGumes(tPokemon *atacante, int pos, float chance, tPokemon *defensor);
+void BombadeSemente(void *poke1, int pos, void *poke2);
 
-void RabodeFerro(tPokemon *atacante, int pos, float chance, tPokemon *defensor);
+void DoisGumes(void *poke1, int pos, void *poke2);
 
-void Cavar(tPokemon *atacante, int pos, float chance, tPokemon *defensor);
+void RabodeFerro(void *poke1, int pos, void *poke2);
 
-void Metronomo(tPokemon *atacante, int pos, float chance, tPokemon *defensor);
+void Cavar(void *poke1, int pos, void *poke2);
 
-void AutoDestruir(tPokemon *atacante, int pos, float chance, tPokemon *defensor);
+void Metronomo(void *poke1, int pos, void *poke2);
+
+void AutoDestruir(void *poke1, int pos, void *poke2);
+
+tAtaque inicializaChoquedoTrovao(float mt);
+
+tAtaque inicializaOndadeChoque(float mt);
+
+tAtaque inicializaBater(float mt);
+
+tAtaque inicializaLancaChamas(float mt);
+
+tAtaque inicializaDormir(float mt);
+
+tAtaque inicializaArmadeAgua(float mt);
+
+tAtaque inicializaProteger(float mt);
+
+tAtaque inicializaPodeSono(float mt);
+
+tAtaque inicializaBombadeSemente(float mt);
+
+tAtaque inicializaDoisGumes(float mt);
+
+tAtaque inicializaRabodeFerro(float mt);
+
+tAtaque inicializaCavar(float mt);
+
+tAtaque inicializaMetronomo(float mt);
+
+tAtaque inicializaAutoDestruir(float mt);
 
 
 #endif //ATAQUES_H

@@ -1,7 +1,7 @@
 #include "../include/Utilidades.h"
 
 float CriaAleatorio(){
-    float aleatorio = (float)rand();
+    float aleatorio = (float)rand()/(float)(RAND_MAX);
     return aleatorio;
 }
 
