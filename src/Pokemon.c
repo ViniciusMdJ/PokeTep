@@ -1,6 +1,6 @@
 #include "../include/Pokemon.h"
 
-enum eTipoP{eletrico, fogo, agua, planta, metal, psiquico};
+enum TipoP{eletrico, fogo, agua, planta, metal, psiquico};
 
 typedef struct pokemon {
     char* nome;
@@ -14,21 +14,7 @@ typedef struct pokemon {
     float HPmax;
     float HPatual;
     //- ponteiro de função de ataques
-}tPokemon;
-
-
-/*tPokemon* CriaPokemon(char* nome, int tipo, float ataque, float defesa, float HPmax){
-    tPokemon* poke;
-
-    poke = (tPokemon*)calloc(1, sizeof(tPokemon));
-
-    strcpy(poke->nome, nome);
-    poke->tipo = tipo;
-    poke->ataque = ataque;
-    poke->defesa = defesa;
-    poke->HPmax = HPmax;
-return poke;
-}*/
+} tPokemon;
 
 
 tPokemon* ListaPoke(int i){
