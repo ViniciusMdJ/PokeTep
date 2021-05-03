@@ -7,17 +7,11 @@
 
 typedef struct pokemon tPokemon;
 
-
-//tPokemon* CriaPokemon(char* nome, int tipo, float ataque, float defesa, float HPmax);
-
 void DestroyPokemon(tPokemon* Pokemon);
-
 
 tPokemon* FillPoke();
 
-char* ReturnNome(tPokemon* Poke);
-
-char* ReturnNome(tPokemon* Poke);
+char* ReturnNome(tPokemon* Poke, int i);
 
 float ReturnAtaque(tPokemon* Poke);
 
@@ -26,4 +20,6 @@ float ReturnDefesa(tPokemon* Poke);
 float ReturnHPmax(tPokemon* Poke);
 
 float* ReturnHPatual(tPokemon* Poke);
+
+int ReturnTipo(tPokemon* Poke, int i);
 #endif
