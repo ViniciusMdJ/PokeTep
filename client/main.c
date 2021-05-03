@@ -7,6 +7,7 @@
 
 int main(int argc, char *argv[]){
 
+    /*
     srand(time(0));
     iniciualizaVetor();
     tPokemon *poke1, *poke2;
@@ -23,7 +24,7 @@ int main(int argc, char *argv[]){
     Movimento_2(poke1, poke2);
     printf("\n");
     Movimento_2(poke2, poke1);
-
+*/
 
 return 0;
 }
