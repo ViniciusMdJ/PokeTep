@@ -23,28 +23,6 @@ typedef struct Pokemon {
 } tPokemon;
 
 
-tPokemon* CriaPokemon(char* nome, int tipo, float ataque, float defesa, float HPmax){
-    tPokemon* poke;
-
-    poke = (tPokemon*)calloc(1, sizeof(tPokemon));
-
-    poke->nome = nome;
-    poke->tipo = tipo;
-    poke->ataque = ataque;
-    poke->defesa = defesa;
-    poke->HPmax = HPmax;
-    poke->HPatual = HPmax;
-    poke->movimentos[0] = DoisGumes;
-    poke->mts[0] = 1;
-    poke->movimentos[1] = RabodeFerro;
-    poke->mts[1] = 1;
-    poke->movimentos[2] = AutoDestruir;
-    poke->mts[2] = 1;
-    poke->prox = NULL;
-
-return poke;
-}
-
 void DestroyPokemon(tPokemon* Pokemon){
     for(Pokemon = Pokemon; Pokemon != NULL; Pokemon = Pokemon->prox){
         free(Pokemon->nome);

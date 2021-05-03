@@ -6,9 +6,6 @@
 
 typedef struct Pokemon tPokemon;
 
-
-tPokemon* CriaPokemon(char* nome, int tipo, float ataque, float defesa, float HPmax);
-
 void DestroyPokemon(tPokemon* Pokemon);
 
 void Movimento_0(tPokemon *poke1, tPokemon *poke2);
