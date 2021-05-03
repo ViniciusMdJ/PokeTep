@@ -16,4 +16,14 @@ void DestroyPokemon(tPokemon* Pokemon);
 tPokemon* FillPoke();
 
 char* ReturnNome(tPokemon* Poke);
+
+char* ReturnNome(tPokemon* Poke);
+
+float ReturnAtaque(tPokemon* Poke);
+
+float ReturnDefesa(tPokemon* Poke);
+
+float ReturnHPmax(tPokemon* Poke);
+
+float* ReturnHPatual(tPokemon* Poke);
 #endif

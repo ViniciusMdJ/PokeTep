@@ -89,3 +89,15 @@ return Lista;
 char* ReturnNome(tPokemon* Poke){
     return Poke->nome;
 }
+float ReturnAtaque(tPokemon* Poke){
+    return Poke->ataque;
+}
+float ReturnDefesa(tPokemon* Poke){
+    return Poke->defesa;
+}
+float ReturnHPmax(tPokemon* Poke){
+    return Poke->HPmax;
+}
+float* ReturnHPatual(tPokemon* Poke){
+    return &Poke->HPatual;
+}
