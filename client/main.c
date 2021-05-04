@@ -4,18 +4,13 @@
 #include "../include/Pontuacao.h"
 #include "../include/Lista.h"
 #include "../include/Jogador.h"
+#include "../include/Menus.h"
 
 int main(int argc, char *argv[]){
-    int n;
-    List *P;
+    char* CaminhoPont;
+    char* CaminhoLogs;
 
-    P = InitIniciais();
-    printf("\n\n");
-    ImprimeLista(P);
-    DestroyLista(P);
-    //getchar();
-    //P = ListaPoke(n);
-    //printf("%s\n", ReturnNome(&P));
+   MenuPrincipal(CaminhoPont, CaminhoLogs); 
 
 
 return 0;

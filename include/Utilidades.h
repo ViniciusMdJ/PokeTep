@@ -10,5 +10,7 @@ float CriaAleatorio();
 
 void Clean();
 
+int VerificaEntre(const char* x, int bottom, int up);
 
+int VerificaNum(const char *x);
 #endif //UTILIDADES_H
