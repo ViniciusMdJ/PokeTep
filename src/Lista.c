@@ -89,11 +89,14 @@ void *BuscaRetorna(List* lista, int pos){
 	return data;
 }
 
-void ImprimeLista(List* x){
+int ImprimeLista(List* x){
+    int i;
 	tTipoPoke* poke = x->primeiro;
+    
 
-	while(poke){
-		printf("%s\n", ReturnNome(poke->Poke));
+	for(i = 0; poke; i++){
+		printf("%d-%s\n", i + 1, ReturnNome(poke->Poke));
 		poke = poke->prox;
 	}
+    return i;
 }

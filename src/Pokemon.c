@@ -1,6 +1,7 @@
 #include "../include/Pokemon.h"
 #include "../include/Ataques.h"
 #include "../include/Lista.h"
+#include "../include/Menus.h"
 
 enum TipoP{eletrico, fogo, agua, planta, metal, psiquico};
 
@@ -93,7 +94,6 @@ List* InitIniciais(){
     tPokemon poke;
     iniciais = InitLista(sizeof(tPokemon), DestroyPokemon);
     int i;
-    printf("chegou aqui\n");
     for(i=0; i<6; i++){
         poke = ListaPoke(i);
         InserirUlt(iniciais, &poke);
@@ -102,10 +102,10 @@ List* InitIniciais(){
     printf("\n\n");
     escolhidos = InitLista(sizeof(tPokemon), DestroyPokemon);
     tPokemon *retirado;
-    int opcao, i;
+    int opcao;
     
     for(i=0; i<3; i++){
-        //chama a funcao do menu q retorna pra opcao
+        opcao = MenuEscolha(iniciais);
         retirado = (tPokemon*)BuscaRetorna(iniciais, opcao);
         InserirUlt(escolhidos, retirado);
         free(retirado);
@@ -228,4 +228,5 @@ float VerificaRelacao(tPokemon *poke1, tPokemon *poke2){
             return 1;
         }
     }
+return 1;
 }

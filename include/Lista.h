@@ -19,6 +19,6 @@ void InserirUlt(List* LISTA, void* data);
 
 void *BuscaRetorna(List* lista, int pos);
 
-void ImprimeLista(List* x);
+int ImprimeLista(List* x);
 
 #endif
