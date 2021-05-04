@@ -102,15 +102,17 @@ List* InitIniciais(){
     printf("\n\n");
     escolhidos = InitLista(sizeof(tPokemon), DestroyPokemon);
     tPokemon *retirado;
-    retirado = (tPokemon*)BuscaRetorna(iniciais, 2);
-    InserirUlt(escolhidos, retirado);
-    free(retirado);
-    retirado = (tPokemon*)BuscaRetorna(iniciais, 2);
-    InserirUlt(escolhidos, retirado);
-    free(retirado);
-    retirado = (tPokemon*)BuscaRetorna(iniciais, 2);
-    InserirUlt(escolhidos, retirado);
-    free(retirado);
+    int opcao, i;
+    
+    for(i=0; i<3; i++){
+        //chama a funcao do menu q retorna pra opcao
+        retirado = (tPokemon*)BuscaRetorna(iniciais, opcao);
+        InserirUlt(escolhidos, retirado);
+        free(retirado);
+    }
+    
+    
+    
 
 
     ImprimeLista(iniciais);
