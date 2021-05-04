@@ -11,7 +11,7 @@ void DestroyPokemon(tPokemon* Pokemon);
 
 tPokemon* ListaPoke();
 
-char* ReturnNome(tPokemon* Poke, int i);
+char* ReturnNome(tPokemon* Poke);
 
 float ReturnAtaque(tPokemon* Poke);
 

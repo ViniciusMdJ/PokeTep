@@ -42,33 +42,4 @@ void AutoDestruir(void *poke1, float mt, void *poke2);
 
 void iniciualizaVetor();
 
-// tAtaque inicializaChoquedoTrovao(float mt);
-
-// tAtaque inicializaOndadeChoque(float mt);
-
-// tAtaque inicializaBater(float mt);
-
-// tAtaque inicializaLancaChamas(float mt);
-
-// tAtaque inicializaDormir(float mt);
-
-// tAtaque inicializaArmadeAgua(float mt);
-
-// tAtaque inicializaProteger(float mt);
-
-// tAtaque inicializaPodeSono(float mt);
-
-// tAtaque inicializaBombadeSemente(float mt);
-
-// tAtaque inicializaDoisGumes(float mt);
-
-// tAtaque inicializaRabodeFerro(float mt);
-
-// tAtaque inicializaCavar(float mt);
-
-// tAtaque inicializaMetronomo(float mt);
-
-// tAtaque inicializaAutoDestruir(float mt);
-
-
 #endif //ATAQUES_H

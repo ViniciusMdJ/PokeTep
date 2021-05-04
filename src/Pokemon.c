@@ -69,8 +69,8 @@ tPokemon* ListaPoke(int i){
     }
 return Poke;
 }
-char* ReturnNome(tPokemon* Poke, int i){
-    return Poke[i].nome;
+char* ReturnNome(tPokemon* Poke){
+    return Poke->nome;
 }
 float ReturnAtaque(tPokemon* Poke){
     return Poke->ataque;
