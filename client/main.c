@@ -7,12 +7,15 @@
 
 int main(int argc, char *argv[]){
     int n;
-    tPokemon* P;
+    List *P;
 
-    scanf("%d", &n);
+    P = InitIniciais();
+    printf("\n\n");
+    ReturnData(P);
+
     //getchar();
-    P = ListaPoke(n);
-    printf("%d\n", ReturnTipo(P));
+    //P = ListaPoke(n);
+    //printf("%s\n", ReturnNome(&P));
 
 return 0;
 }

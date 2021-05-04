@@ -3,16 +3,22 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "Pokemon.h"
+#include <string.h>
+
 typedef void (*freeData)(void *);
 
-
 typedef struct TipoPoke tTipoPoke;
+
 typedef struct Lista List;
-int InitLista(List* LISTA, int tam, freeData function);
 
-int DestroyLista(List* LISTA);
+List* InitLista(int tam, freeData function);
 
-int InserirUlt(List* LISTA, void* data);
+void DestroyLista(List* LISTA);
+
+void InserirUlt(List* LISTA, void* data);
+
+tTipoPoke *BuscaRetorna(List* lista, int pos);
+
+void ReturnData(List* x);
 
 #endif

@@ -4,12 +4,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "Lista.h"
 
 typedef struct pokemon tPokemon;
 
-void DestroyPokemon(tPokemon* Pokemon);
+void DestroyPokemon(void* Pokemon);
 
-tPokemon* ListaPoke();
+tPokemon ListaPoke(int i);
 
 char* ReturnNome(tPokemon* Poke);
 
@@ -22,6 +23,8 @@ float ReturnHPmax(tPokemon* Poke);
 float* ReturnHPatual(tPokemon* Poke);
 
 int ReturnTipo(tPokemon* Poke);
+
+List* InitIniciais();
 
 void Movimento_0(tPokemon *poke1, tPokemon *poke2);
 
