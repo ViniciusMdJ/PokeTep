@@ -17,8 +17,8 @@ void DestroyLista(List* LISTA);
 
 void InserirUlt(List* LISTA, void* data);
 
-tTipoPoke *BuscaRetorna(List* lista, int pos);
+void *BuscaRetorna(List* lista, int pos);
 
-void ReturnData(List* x);
+void ImprimeLista(List* x);
 
 #endif

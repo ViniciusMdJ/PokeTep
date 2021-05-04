@@ -11,11 +11,12 @@ int main(int argc, char *argv[]){
 
     P = InitIniciais();
     printf("\n\n");
-    ReturnData(P);
-
+    ImprimeLista(P);
+    DestroyLista(P);
     //getchar();
     //P = ListaPoke(n);
     //printf("%s\n", ReturnNome(&P));
+
 
 return 0;
 }

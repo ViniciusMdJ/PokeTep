@@ -36,6 +36,7 @@ void DestroyLista(List* LISTA) {
 		free(atual->Poke);
 		free(atual);
 	}	
+	free(LISTA);
 }
 
 void InserirUlt(List* LISTA, void* data) {
@@ -65,8 +66,9 @@ void InserirUlt(List* LISTA, void* data) {
 
 }
 
-tTipoPoke *BuscaRetorna(List* lista, int pos){
+void *BuscaRetorna(List* lista, int pos){
 	tTipoPoke *poke, *ant = NULL;
+	tPokemon *data;
 	int i;
 	poke = lista->primeiro;
 	for(i=0; i<pos-1; i++){
@@ -79,14 +81,15 @@ tTipoPoke *BuscaRetorna(List* lista, int pos){
 		poke->prox = NULL;
 	}
 	else{
-		ant = poke->prox;
+		ant->prox = poke->prox;
 		poke->prox = NULL;
 	}
-	
-	return poke;
+	data = poke->Poke;
+	free(poke);
+	return data;
 }
 
-void ReturnData(List* x){
+void ImprimeLista(List* x){
 	tTipoPoke* poke = x->primeiro;
 
 	while(poke){

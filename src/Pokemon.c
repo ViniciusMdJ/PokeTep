@@ -89,18 +89,34 @@ int ReturnTipo(tPokemon* Poke){
 }
 
 List* InitIniciais(){
-    List *iniciais;
+    List *iniciais, *escolhidos;
     tPokemon poke;
     iniciais = InitLista(sizeof(tPokemon), DestroyPokemon);
     int i;
     printf("chegou aqui\n");
     for(i=0; i<6; i++){
         poke = ListaPoke(i);
-        printf("%s\n", poke.nome);
         InserirUlt(iniciais, &poke);
     }
+    ImprimeLista(iniciais);
+    printf("\n\n");
+    escolhidos = InitLista(sizeof(tPokemon), DestroyPokemon);
+    tPokemon *retirado;
+    retirado = (tPokemon*)BuscaRetorna(iniciais, 2);
+    InserirUlt(escolhidos, retirado);
+    free(retirado);
+    retirado = (tPokemon*)BuscaRetorna(iniciais, 2);
+    InserirUlt(escolhidos, retirado);
+    free(retirado);
+    retirado = (tPokemon*)BuscaRetorna(iniciais, 2);
+    InserirUlt(escolhidos, retirado);
+    free(retirado);
 
-    return iniciais;
+
+    ImprimeLista(iniciais);
+    DestroyLista(iniciais);
+
+    return escolhidos;
 }
 
 void DestroyPokemon(void* Pokemon){
