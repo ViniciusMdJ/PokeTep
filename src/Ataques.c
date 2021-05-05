@@ -1,6 +1,10 @@
+#include "../include/Menus.h"
+#include "../include/Lista.h"
+#include "../include/Utilidades.h"
+#include "../include/Pontuacao.h"
+#include "../include/Jogador.h"
 #include "../include/Ataques.h"
 #include "../include/Pokemon.h"
-#include "../include/Utilidades.h"
 
 typedef tAtaque *(*fptrInicializaPoke)();
 
@@ -221,7 +225,7 @@ void AutoDestruir(void *poke1, void *poke2){
     CausarDano(poke1, 99999);
 }
 
-void iniciualizaFptrAtaque(){
+void inicializaFptrAtaques(){
     AllAtks[0] = ChoquedoTrovao;
     AllAtks[1] = OndadeChoque;
     AllAtks[2] = Bater;
@@ -248,7 +252,9 @@ void InicializaFptrPokemons(){
 }
 
 void DestroytAtaques(tAtaque *x){
-    free(x->nomeAtk);
+    free(x[0].nomeAtk);
+    free(x[1].nomeAtk);
+    free(x[2].nomeAtk);
 }
 
 fptrInicializaPoke ReturnInicializador(int pos){
