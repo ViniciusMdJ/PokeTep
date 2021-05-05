@@ -10,7 +10,10 @@ int main(int argc, char *argv[]){
     char* CaminhoPont = "data/pontuacao.txt";
     char* CaminhoLogs;
 
-   MenuPrincipal(CaminhoPont, CaminhoLogs); 
+    inicializaFptrAtaques();
+    InicializaFptrPokemons();
+
+    MenuPrincipal(CaminhoPont, CaminhoLogs); 
 
 
 return 0;

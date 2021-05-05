@@ -1,4 +1,10 @@
+#include "../include/Menus.h"
+#include "../include/Lista.h"
+#include "../include/Utilidades.h"
+#include "../include/Pontuacao.h"
 #include "../include/Jogador.h"
+#include "../include/Ataques.h"
+#include "../include/Pokemon.h"
 
 
 typedef struct jogador{
@@ -6,7 +12,7 @@ typedef struct jogador{
     unsigned int qtdPokemon;
     unsigned int qtdPokebola;
     unsigned int vitorias;
-    //pokemons
+    List *Pokemons; 
 }tJogador;
 
 void imprimeJogador(tJogador *x){
@@ -18,6 +24,8 @@ tJogador *newPlayer(){
     char *nome;
     novo = malloc(sizeof(tJogador));
     nome = malloc(sizeof(char) * 129);
+
+    Clean(); 
     printf("Qual o seu nome?\n");
     while(1){
         fgets(nome, sizeof(char) * 129, stdin);
@@ -32,9 +40,9 @@ tJogador *newPlayer(){
     novo->qtdPokebola = 3;
     novo->qtdPokemon = 0;
     novo->vitorias = 0;
-    //novo.pokemon = NULL ou
-    //chama a função para escolher os pokemons aqui
-    
+    novo->Pokemons = InitIniciais();
+    ImprimeLista(novo->Pokemons);
+    getchar();
 
     free(nome);
     return novo;
@@ -52,6 +60,6 @@ static int VerificaNickname(char *nome){
 
 void destroyJogador(tJogador *x){
     free(x->nickname);
-    //destroyPokemon
+    DestroyLista(x->Pokemons);
     free(x);
 }

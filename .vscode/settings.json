@@ -1,6 +1,9 @@
 {
     "files.associations": {
         "pokemon.h": "c",
-        "menus.h": "c"
+        "menus.h": "c",
+        "a.out.h": "c",
+        "utilidades.h": "c",
+        "pontuacao.h": "c"
     }
 }
