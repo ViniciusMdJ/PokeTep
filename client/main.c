@@ -7,7 +7,7 @@
 #include "../include/Menus.h"
 
 int main(int argc, char *argv[]){
-    char* CaminhoPont;
+    char* CaminhoPont = "data/pontuacao.txt";
     char* CaminhoLogs;
 
    MenuPrincipal(CaminhoPont, CaminhoLogs); 

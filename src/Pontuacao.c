@@ -1,4 +1,5 @@
 #include "../include/Pontuacao.h"
+#include "../include/Utilidades.h"
 
 
 typedef struct Pontuacao{
@@ -54,8 +55,9 @@ void imprimePontuacao(char *caminho){
     tPontuacao *next, *lista = LeArquivo(caminho);
     int i=1;
 
+    Clean();
     for(next = lista->prox; next != NULL; next = next->prox){
-        printf("%d- %s: %d\n", i, next->nickname, next->partidas);
+        printf("\t%d- %s: %d\n", i, next->nickname, next->partidas);
         i++;
     }
 
