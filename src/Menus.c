@@ -1,6 +1,7 @@
 #include "../include/Menus.h"
 #include "../include/Lista.h"
 #include "../include/Utilidades.h"
+#include "../include/Pontuacao.h"
 
 int MenuEscolha(List* Lista){
     char op[128];
@@ -21,27 +22,29 @@ void MenuPrincipal(char* arqPontuacao,char* arqLogs){
     int  opcao; 
 
     while(1){
+        Clean();
         printf("Escolha Uma Opcao\n\n");
         printf("\t1-Jogar\n");
         printf("\t2-Melhores Pontuacoes\n");
-        printf("\t3-Sair\n");
+        printf("\t3-Sair\n\n\t");
         while(1){
-            scanf("%s", aux);        
+            scanf("%s", aux);
+            getchar();//pega o enter que o maldito scanf nao captura        
             opcao = VerificaEntre(aux, 1, 3);
-            switch (opcao){
-                case 1:
-                    //funcao logar
-                    printf("1\n");
-                    break;
-                case 2:
-                    //funcao pontuao
-                    printf("2\n");
-                    break;
-                case 3:
-                    return;
-                default:
-                    printf("Escolha uma opcao valida\n");
-                    break;
+            if(opcao == 1){
+                //funcao logar
+                break;
+            }
+            else if(opcao == 2){
+                imprimePontuacao(arqPontuacao);
+                break;
+            }
+            else if(opcao == 3){
+                Clean();
+                return;
+            }
+            else{
+                printf("\tEscolha uma opcao valida\n\t");
             }
         }
     }

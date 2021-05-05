@@ -6,6 +6,8 @@
 #include <string.h>
 #include "Lista.h"
 
+enum TipoP{normal, fogo, agua, planta, eletrico, psiquico, metal};
+
 typedef struct pokemon tPokemon;
 
 void DestroyPokemon(void* Pokemon);
@@ -25,12 +27,6 @@ float* ReturnHPatual(tPokemon* Poke);
 int ReturnTipo(tPokemon* Poke);
 
 List* InitIniciais();
-
-void Movimento_0(tPokemon *poke1, tPokemon *poke2);
-
-void Movimento_1(tPokemon *poke1, tPokemon *poke2);
-
-void Movimento_2(tPokemon *poke1, tPokemon *poke2);
 
 void CausarDano(tPokemon *poke, float dano);
 
