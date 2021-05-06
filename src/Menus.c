@@ -5,6 +5,7 @@
 #include "../include/Jogador.h"
 #include "../include/Ataques.h"
 #include "../include/Pokemon.h"
+#include "../include/Batalha.h"
 
 int MenuEscolha(List* Lista){
     char op[128];
@@ -25,8 +26,9 @@ return escolha;
 
 void MenuPrincipal(char* arqPontuacao,char* arqLogs){
     char aux[128];
-    int  opcao; 
+    int  opcao, *vitoriasPlayer; 
     tJogador *Player;
+    List *pokePlayer;
 
     while(1){
         Clean();
@@ -41,6 +43,11 @@ void MenuPrincipal(char* arqPontuacao,char* arqLogs){
             if(opcao == 1){
                 Player = newPlayer();
                 destroyJogador(Player);
+                vitoriasPlayer = ReturnVitorias(Player);
+                pokePlayer = ReturnListaPoke(Player);
+                *vitoriasPlayer = batalha(pokePlayer);
+                //salva pontuacao jogador e volta pro menu principal;
+                getchar();
                 
                 break;
             }

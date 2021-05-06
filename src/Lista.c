@@ -105,3 +105,16 @@ int ImprimeLista(List* x){
 	}
     return i;
 }
+
+void RemoveFirst(List *poke){
+	tTipoPoke *x;
+	x = poke->primeiro;
+	poke->primeiro = x->prox;
+	poke->freeFunc(x->Poke);
+	free(x->Poke);
+	free(x);	
+}
+
+void *ReturnFirstPoke(List *x){
+	return x->primeiro->Poke;
+}

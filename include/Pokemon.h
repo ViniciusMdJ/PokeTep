@@ -12,7 +12,7 @@ typedef struct pokemon tPokemon;
 
 void DestroyPokemon(void* Pokemon);
 
-tPokemon ListaPoke(int i);
+tPokemon *ListaPoke(int i);
 
 char* ReturnNome(tPokemon* Poke);
 

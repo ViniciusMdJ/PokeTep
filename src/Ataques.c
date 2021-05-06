@@ -22,8 +22,8 @@ typedef void (*fptrAtaque)(void *poke1, void *poke2);
  *  9 = DoisGumes;
  *  10 = RabodeFerro;
  *  11 = Cavar;
- *  12 = Metronomo;
- *  13 = AutoDestruir;
+ *  12 = AutoDestruir;
+ *  13 = Metronomo;
 */
 
 typedef struct Ataque{
@@ -39,7 +39,7 @@ float Modificador(float mt, float relacao){
     float valor = mt * relacao;
 
     float aleat = CriaAleatorio();
-    if(aleat <= (1.0/2.0)){
+    if(aleat <= (1.0/24.0)){
         printf("CRITOU\n");
         valor *= 2;
     }

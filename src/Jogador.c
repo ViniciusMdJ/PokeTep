@@ -63,3 +63,11 @@ void destroyJogador(tJogador *x){
     DestroyLista(x->Pokemons);
     free(x);
 }
+
+List *ReturnListaPoke(tJogador *x){
+    return x->Pokemons;
+}
+
+int *ReturnVitorias(tJogador *x){
+    return &x->vitorias;
+}

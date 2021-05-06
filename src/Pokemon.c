@@ -13,6 +13,9 @@ typedef struct pokemon {
     int dormindo;
     int queimando;
     int paralisado;
+    int atkDormir;
+    int imune;
+    int cavar;
 
     tAtaque *Movimentos;
 
@@ -23,67 +26,68 @@ typedef struct pokemon {
 } tPokemon;
 
 
-tPokemon ListaPoke(int i){
-    tPokemon Poke;
+tPokemon *ListaPoke(int i){
+    tPokemon *Poke;
+    Poke = malloc(sizeof(tPokemon));
     fptrInicializaPoke funcao = ReturnInicializador(i);
     if(i == 0){
-        Poke.nome = strdup("Picachu");
-        Poke.tipo = eletrico;
-        Poke.ataque = 110;
-        Poke.defesa = 100;
-        Poke.HPmax = 200;
-        Poke.HPatual = Poke.HPmax;
-        Poke.Movimentos = funcao();
+        Poke->tipo = eletrico;
+        Poke->ataque = 110;
+        Poke->defesa = 100;
+        Poke->nome = strdup("Picachu");
+        Poke->HPmax = 200;
+        Poke->HPatual = Poke->HPmax;
+        Poke->Movimentos = funcao();
     }
     else if(i == 1){
-        Poke.nome = strdup("Charizard");
-        Poke.tipo = fogo;
-        Poke.ataque = 160;
-        Poke.defesa = 150;
-        Poke.HPmax = 260;
-        Poke.HPatual = Poke.HPmax;
-        Poke.Movimentos = funcao();
+        Poke->nome = strdup("Charizard");
+        Poke->tipo = fogo;
+        Poke->ataque = 160;
+        Poke->defesa = 150;
+        Poke->HPmax = 260;
+        Poke->HPatual = Poke->HPmax;
+        Poke->Movimentos = funcao();
     }
     else if(i == 2){
-        Poke.nome = strdup("Blastoise");
-        Poke.tipo = agua;
-        Poke.ataque = 180;
-        Poke.defesa = 200;
-        Poke.HPmax = 280;
-        Poke.HPatual = Poke.HPmax;
-        Poke.Movimentos = funcao();
+        Poke->nome = strdup("Blastoise");
+        Poke->tipo = agua;
+        Poke->ataque = 180;
+        Poke->defesa = 200;
+        Poke->HPmax = 280;
+        Poke->HPatual = Poke->HPmax;
+        Poke->Movimentos = funcao();
     }
     else if(i == 3){
-        Poke.nome = strdup("Venusaur");
-        Poke.tipo = planta;
-        Poke.ataque = 160;
-        Poke.defesa = 160;
-        Poke.HPmax = 300;
-        Poke.HPatual = Poke.HPmax;
-        Poke.Movimentos = funcao();
+        Poke->nome = strdup("Venusaur");
+        Poke->tipo = planta;
+        Poke->ataque = 160;
+        Poke->defesa = 160;
+        Poke->HPmax = 300;
+        Poke->HPatual = Poke->HPmax;
+        Poke->Movimentos = funcao();
     }
     else if(i == 4){
-        Poke.nome = strdup("Steelix");
-        Poke.tipo = metal;
-        Poke.ataque = 170;
-        Poke.defesa = 400;
-        Poke.HPmax = 280;
-        Poke.HPatual = Poke.HPmax;
-        Poke.Movimentos = funcao();
+        Poke->nome = strdup("Steelix");
+        Poke->tipo = metal;
+        Poke->ataque = 170;
+        Poke->defesa = 400;
+        Poke->HPmax = 280;
+        Poke->HPatual = Poke->HPmax;
+        Poke->Movimentos = funcao();
     }
     else if(i == 5){
-        Poke.nome = strdup("Mew");
-        Poke.tipo = psiquico;
-        Poke.ataque = 200;
-        Poke.defesa = 200;
-        Poke.HPmax = 320;
-        Poke.HPatual = Poke.HPmax;
-        Poke.Movimentos = funcao();
+        Poke->nome = strdup("Mew");
+        Poke->tipo = psiquico;
+        Poke->ataque = 200;
+        Poke->defesa = 200;
+        Poke->HPmax = 320;
+        Poke->HPatual = Poke->HPmax;
+        Poke->Movimentos = funcao();
     }
 
-    Poke.dormindo = -1;
-    Poke.paralisado = -1;
-    Poke.queimando = -1;
+    Poke->dormindo = -1;
+    Poke->paralisado = -1;
+    Poke->queimando = -1;
 return Poke;
 }
 char* ReturnNome(tPokemon* Poke){
@@ -107,12 +111,13 @@ int ReturnTipo(tPokemon* Poke){
 
 List* InitIniciais(){
     List *iniciais, *escolhidos;
-    tPokemon poke;
+    tPokemon *poke;
     iniciais = InitLista(sizeof(tPokemon), DestroyPokemon);
     int i;
     for(i=0; i<6; i++){
         poke = ListaPoke(i);
-        InserirUlt(iniciais, &poke);
+        InserirUlt(iniciais, poke);
+        free(poke);
     }
 
     escolhidos = InitLista(sizeof(tPokemon), DestroyPokemon);
