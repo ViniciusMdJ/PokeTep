@@ -41,6 +41,7 @@ void MenuPrincipal(char* arqPontuacao,char* arqLogs){
             if(opcao == 1){
                 Player = newPlayer();
                 destroyJogador(Player);
+                
                 break;
             }
             else if(opcao == 2){

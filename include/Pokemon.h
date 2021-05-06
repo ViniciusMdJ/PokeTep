@@ -6,7 +6,7 @@
 #include <string.h>
 #include "Lista.h"
 
-enum TipoP{normal, fogo, agua, planta, eletrico, psiquico, metal};
+enum TipoP{fogo, agua, planta, eletrico, psiquico, metal, normal};
 
 typedef struct pokemon tPokemon;
 

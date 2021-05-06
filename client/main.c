@@ -5,8 +5,10 @@
 #include "../include/Lista.h"
 #include "../include/Jogador.h"
 #include "../include/Menus.h"
+#include <time.h>
 
 int main(int argc, char *argv[]){
+    srand(time(0));
     char* CaminhoPont = "data/pontuacao.txt";
     char* CaminhoLogs;
 
@@ -14,6 +16,7 @@ int main(int argc, char *argv[]){
     InicializaFptrPokemons();
 
     MenuPrincipal(CaminhoPont, CaminhoLogs); 
+    
 
 
 return 0;
