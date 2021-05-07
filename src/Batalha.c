@@ -76,6 +76,8 @@ int batalha(List *ListaJogador, int qtdPokebola){
                             }
                         }
                         else{
+                            //se atkDormir == 0 recupera vida
+                            //se cavar ativo chama a funcao de dar dano do cavar
                             //usa ataque opJogador
                         }
                         if(!*HpPokeJogador){
@@ -102,6 +104,9 @@ int batalha(List *ListaJogador, int qtdPokebola){
                 break;
             }
 
+            //diminui status pokeJogador
+            //atkdormir tem q ser 1 a mais
+
             //ataque da maquina
             if(pokeJogador){//pokemon do jogador nao for nulo
                 
@@ -111,6 +116,8 @@ int batalha(List *ListaJogador, int qtdPokebola){
                 }
                 if(*HpMaquina){
                     if(PodeAtacar(maquina)){
+                        //se atkDormir == 0 recupera vida
+                        //se cavar ativo chama a funcao de dar dano do cavar
                         //usa ataque da maquina com rand
                     }
                     else{
@@ -136,6 +143,8 @@ int batalha(List *ListaJogador, int qtdPokebola){
             else{
                 break;
             }
+            //diminui status maquina
+            //atkdormir tem q ser 1 a mais
         }
 
     }

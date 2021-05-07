@@ -10,12 +10,12 @@ typedef struct pokemon {
     char* nome;
     int tipo;
 
-    int dormindo;
-    int queimando;
-    int paralisado;
-    int atkDormir;
-    int imune;
-    int cavar;
+    int dormindo;//     0 = padrao, 0 > dormindo    
+    int queimando;//    0 = padrao, 1 = queimando
+    int paralisado;//   0 = padrao, 0 > paralisado
+    int atkDormir;//    -1 = padrao, 0 = recupera HP, 0 > Dormindo
+    int imune;//        0 = padrao, 0 > nao toma dano
+    int cavar;//        0 = padrao, 1 = da o dano
 
     tAtaque *Movimentos;
 
@@ -85,12 +85,12 @@ tPokemon *ListaPoke(int i){
         Poke->Movimentos = funcao();
     }
 
-    Poke->dormindo = -1;
-    Poke->paralisado = -1;
-    Poke->queimando = -1;
+    Poke->dormindo = 0;
+    Poke->paralisado = 0;
+    Poke->queimando = 0;
     Poke->atkDormir = -1;
-    Poke->imune = -1;
-    Poke->cavar = -1;
+    Poke->imune = 0;
+    Poke->cavar = 0;
 
 return Poke;
 }
@@ -195,7 +195,7 @@ char *NomedoAtk(tPokemon *poke, int pos){
 }
 
 int PodeAtacar(tPokemon *poke){
-    if(!poke->paralisado && !poke->dormindo){
+    if(!poke->paralisado && !poke->dormindo && (poke->atkDormir <= 0)){
         return 1;
     }
     return 0;

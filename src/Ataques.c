@@ -49,7 +49,6 @@ float Modificador(float mt, float relacao){
 }
 
 float CaulculaDano(void *poke1, const float poder, float mt, void *poke2){
-    //falta criar a funcao para retornar a relacao
     float valor, ataque, defesa, relacao;
 
     relacao = VerificaRelacao(poke1, poke2);
