@@ -108,13 +108,18 @@ int ImprimeLista(List* x){
 
 void RemoveFirst(List *poke){
 	tTipoPoke *x;
-	x = poke->primeiro;
-	poke->primeiro = x->prox;
-	poke->freeFunc(x->Poke);
-	free(x->Poke);
-	free(x);	
+	if(poke->primeiro){//primeiro poke nao for nulo
+		x = poke->primeiro;
+		poke->primeiro = x->prox;
+		poke->freeFunc(x->Poke);
+		free(x->Poke);
+		free(x);
+	}
 }
 
 void *ReturnFirstPoke(List *x){
-	return x->primeiro->Poke;
+	if(x->primeiro){//primeiro poke nao for nulo
+		return x->primeiro->Poke;
+	}
+	return NULL;
 }

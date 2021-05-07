@@ -31,4 +31,14 @@ List* InitIniciais();
 void CausarDano(tPokemon *poke, float dano);
 
 float VerificaRelacao(tPokemon *poke1, tPokemon *poke2);
+
+void ResetaStatus(tPokemon *poke);
+
+void AumenteHp(tPokemon *poke, float qtd);
+
+char *NomedoAtk(tPokemon *poke, int pos);
+
+int PodeAtacar(tPokemon *poke);
+
+int Queimando(tPokemon *poke);
 #endif

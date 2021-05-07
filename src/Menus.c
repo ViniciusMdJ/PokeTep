@@ -26,7 +26,7 @@ return escolha;
 
 void MenuPrincipal(char* arqPontuacao,char* arqLogs){
     char aux[128];
-    int  opcao, *vitoriasPlayer; 
+    int  opcao, *vitoriasPlayer, qtdPokebolas; 
     tJogador *Player;
     List *pokePlayer;
 
@@ -45,7 +45,8 @@ void MenuPrincipal(char* arqPontuacao,char* arqLogs){
                 destroyJogador(Player);
                 vitoriasPlayer = ReturnVitorias(Player);
                 pokePlayer = ReturnListaPoke(Player);
-                *vitoriasPlayer = batalha(pokePlayer);
+                qtdPokebolas = ReturnqtdPokebola(Player);
+                *vitoriasPlayer = batalha(pokePlayer, qtdPokebolas);
                 //salva pontuacao jogador e volta pro menu principal;
                 getchar();
                 
@@ -64,4 +65,27 @@ void MenuPrincipal(char* arqPontuacao,char* arqLogs){
             }
         }
     }
+}
+
+int MenuBatalha(tPokemon *poke, int qtdPokebola){
+    char *op = malloc(sizeof(char) * 129);
+    int escolha;
+
+    printf("Escolha um movimento:\n");
+    printf("1- %s\n", NomedoAtk(poke, 0));
+    printf("2- %s\n", NomedoAtk(poke, 1));
+    printf("3- %s\n", NomedoAtk(poke, 2));
+    printf("4- Tentar capiturar (%d pokebola)", qtdPokebola);
+    printf("5- Fugir");
+    do{
+        escolha = VerificaEntre(op, 1, 5);
+        if(escolha == 4 && !qtdPokebola){
+            escolha = 0;
+        }
+        if(escolha == 0){
+            printf("Escolha uma opção valida\n");
+        }
+    }while(!escolha);
+
+    return escolha;
 }

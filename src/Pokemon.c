@@ -88,6 +88,10 @@ tPokemon *ListaPoke(int i){
     Poke->dormindo = -1;
     Poke->paralisado = -1;
     Poke->queimando = -1;
+    Poke->atkDormir = -1;
+    Poke->imune = -1;
+    Poke->cavar = -1;
+
 return Poke;
 }
 char* ReturnNome(tPokemon* Poke){
@@ -168,4 +172,38 @@ float VerificaRelacao(tPokemon *poke1, tPokemon *poke2){
     float relacao = relacoes[tipoPoke1][tipoPoke2];
 
     return relacao;
+}
+
+void ResetaStatus(tPokemon *poke){
+    poke->dormindo = -1;
+    poke->paralisado = -1;
+    poke->queimando = -1;
+    poke->atkDormir = -1;
+    poke->imune = -1;
+    poke->cavar = -1;
+}
+
+void AumenteHp(tPokemon *poke, float qtd){
+    poke->HPatual += qtd;
+    if(poke->HPatual > poke->HPmax){
+        poke->HPatual = poke->HPmax;
+    }
+}
+
+char *NomedoAtk(tPokemon *poke, int pos){
+    return ReturnNomeAtk(poke->Movimentos, pos);
+}
+
+int PodeAtacar(tPokemon *poke){
+    if(!poke->paralisado && !poke->dormindo){
+        return 1;
+    }
+    return 0;
+}
+
+int Queimando(tPokemon *poke){
+    if(poke->queimando){
+        return 1;
+    }
+    return 0;
 }

@@ -266,6 +266,10 @@ void DestroytAtaques(tAtaque *x){
     free(x[2].nomeAtk);
 }
 
+char *ReturnNomeAtk(tAtaque *x, int pos){
+    return x[pos].nomeAtk;
+}
+
 fptrInicializaPoke ReturnInicializador(int pos){
     return Inicializadores[pos];
 }

@@ -50,6 +50,8 @@ void InicializaFptrPokemons();
 
 void DestroytAtaques(tAtaque *x);
 
+char *ReturnNomeAtk(tAtaque *x, int pos);
+
 fptrInicializaPoke ReturnInicializador(int pos);
 
 fptrAtaque ReturnMovimento(tAtaque *atak, int pos);

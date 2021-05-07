@@ -4,9 +4,6 @@
 #include "Pokemon.h"
 #include "Lista.h"
 
-int batalha(List *ListaJogador);
-
-
-
+int batalha(List *ListaJogador, int qtdPokebola);
 
 #endif //BATALHA_H

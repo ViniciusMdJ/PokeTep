@@ -23,4 +23,6 @@ List *ReturnListaPoke(tJogador *x);
 
 int *ReturnVitorias(tJogador *x);
 
+int ReturnqtdPokebola(tJogador *x);
+
 #endif //JOGADOR_H
