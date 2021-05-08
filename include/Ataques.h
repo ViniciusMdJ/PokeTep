@@ -44,6 +44,8 @@ void Metronomo(void *poke1, void *poke2);
 
 void AutoDestruir(void *poke1, void *poke2);
 
+void DanoCavar(void *poke1, void *poke2);
+
 void inicializaFptrAtaques();
 
 void InicializaFptrPokemons();

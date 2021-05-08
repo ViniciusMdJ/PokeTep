@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Lista.h"
+#include "Ataques.h"
 
 enum TipoP{fogo, agua, planta, eletrico, psiquico, metal, normal};
 
@@ -28,6 +29,8 @@ int ReturnTipo(tPokemon* Poke);
 
 List* InitIniciais();
 
+fptrAtaque MovimentoPokemon(tPokemon *poke, int pos);
+
 void CausarDano(tPokemon *poke, float dano);
 
 float VerificaRelacao(tPokemon *poke1, tPokemon *poke2);
@@ -41,4 +44,32 @@ char *NomedoAtk(tPokemon *poke, int pos);
 int PodeAtacar(tPokemon *poke);
 
 int Queimando(tPokemon *poke);
+
+void DiminuiDormindo(tPokemon *x);
+
+void DiminuiParalisado(tPokemon *x);
+
+void DiminuiImune(tPokemon *x);
+
+void DiminuiAtkDormir(tPokemon *x);
+
+void DiminuiCavar(tPokemon *poke);
+
+void Queimar(tPokemon *x);
+
+void SetDormindo(tPokemon *poke, int x);
+
+void SetParalisado(tPokemon *poke, int x);
+
+void SetImune(tPokemon *poke, int x);
+
+void SetAtkDormir(tPokemon *poke, int x);
+
+int VerificaAtkDormir(tPokemon *x);
+
+int VerificaCavar(tPokemon *x);
+
+int VerificaImune(tPokemon *x);
+
+void Cavou(tPokemon *x);
 #endif

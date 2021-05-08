@@ -10,13 +10,18 @@
 
 int batalha(List *ListaJogador, int qtdPokebola){
     static int qtdBatalha = 0;
-    int qtdVitorias = 0, pokeBatalhados = 0, ultimaPokebola = 0, UltimoMew = 0, opJogador;
-    float *HpPokeJogador, *HpMaquina;
-    *HpMaquina = 0;
+    qtdBatalha++;
+    int qtdVitorias = 0, pokeBatalhados = 0, ultimaPokebola = 0, UltimoMew = 0, opJogador, randMaquina;
     float random, HpMax, aux;
+    float *HpPokeJogador, *HpMaquina, i = 0; 
+    HpMaquina = &i;
+
+    fptrAtaque AtaquePokemon;
+
     tPokemon *maquina = NULL, *pokeJogador;
     pokeJogador = (tPokemon*) ReturnFirstPoke(ListaJogador);
     HpPokeJogador = ReturnHPatual(pokeJogador);
+
     
 
     while(pokeJogador != NULL){
@@ -76,9 +81,18 @@ int batalha(List *ListaJogador, int qtdPokebola){
                             }
                         }
                         else{
-                            //se atkDormir == 0 recupera vida
-                            //se cavar ativo chama a funcao de dar dano do cavar
-                            //usa ataque opJogador
+                            if(VerificaAtkDormir(pokeJogador)){
+                                AumenteHp(pokeJogador, 99999);
+                                DiminuiAtkDormir(pokeJogador);
+                            }
+                            if(VerificaCavar(pokeJogador)){
+                                DanoCavar(pokeJogador, maquina);
+                            }
+                            AtaquePokemon = MovimentoPokemon(pokeJogador, opJogador-1);
+                            AtaquePokemon(pokeJogador, maquina);
+                            getchar();
+                            printf("\n\n");
+                            //chama o log
                         }
                         if(!*HpPokeJogador){
                             RemoveFirst(ListaJogador);
@@ -93,7 +107,7 @@ int batalha(List *ListaJogador, int qtdPokebola){
                         }
                     }
                     else{
-                        printf("poke paralisado ou dormindo");
+                        printf("Jogador paralisado ou dormindo\n");
                     }
                 }
                 else{
@@ -104,8 +118,10 @@ int batalha(List *ListaJogador, int qtdPokebola){
                 break;
             }
 
-            //diminui status pokeJogador
-            //atkdormir tem q ser 1 a mais
+            DiminuiAtkDormir(maquina);
+            DiminuiDormindo(pokeJogador);
+            DiminuiImune(pokeJogador);
+            DiminuiParalisado(pokeJogador);
 
             //ataque da maquina
             if(pokeJogador){//pokemon do jogador nao for nulo
@@ -116,12 +132,22 @@ int batalha(List *ListaJogador, int qtdPokebola){
                 }
                 if(*HpMaquina){
                     if(PodeAtacar(maquina)){
-                        //se atkDormir == 0 recupera vida
-                        //se cavar ativo chama a funcao de dar dano do cavar
-                        //usa ataque da maquina com rand
+                        if(VerificaAtkDormir(maquina)){
+                            AumenteHp(maquina, 99999);
+                            DiminuiAtkDormir(maquina);
+                        }
+                        if(VerificaCavar(maquina)){
+                            DanoCavar(maquina, pokeJogador);
+                        }
+                        randMaquina = rand() % 3;
+                        AtaquePokemon = MovimentoPokemon(maquina, randMaquina);
+                        AtaquePokemon(maquina, pokeJogador);
+                        getchar();
+                        printf("\n\n");
+                        //chama o log
                     }
                     else{
-                        //poke nao pode atacar paralisado ou dormindo
+                        printf("Maquina paralisada ou dormindo\n");
                     }
                 }
                 else{
@@ -143,8 +169,10 @@ int batalha(List *ListaJogador, int qtdPokebola){
             else{
                 break;
             }
-            //diminui status maquina
-            //atkdormir tem q ser 1 a mais
+            DiminuiAtkDormir(pokeJogador);
+            DiminuiDormindo(maquina);
+            DiminuiImune(maquina);
+            DiminuiParalisado(maquina);
         }
 
     }

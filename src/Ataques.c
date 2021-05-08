@@ -8,6 +8,21 @@
 
 typedef tAtaque *(*fptrInicializaPoke)();
 
+/*
+    0 = Pikachu;
+    1 = Charizard;
+    2 = Blastoise;
+    3 = Venusaur;
+    4 = Steelix;
+    5 = Mew; 
+*/
+fptrInicializaPoke Inicializadores[6] = {NULL};
+
+typedef struct Ataque{
+    fptrAtaque atk;
+    char *nomeAtk;
+}tAtaque;
+
 typedef void (*fptrAtaque)(void *poke1, void *poke2);
 /**
  *  0 = ChoquedoTrovao;
@@ -24,16 +39,12 @@ typedef void (*fptrAtaque)(void *poke1, void *poke2);
  *  11 = Cavar;
  *  12 = AutoDestruir;
  *  13 = Metronomo;
+ *  14 = DanoCavar;
 */
+fptrAtaque AllAtks[15] = {NULL};
 
-typedef struct Ataque{
-    fptrAtaque atk;
-    char *nomeAtk;
-}tAtaque;
 
-fptrAtaque AllAtks[14] = {NULL};
 
-fptrInicializaPoke Inicializadores[6] = {NULL};
 
 float Modificador(float mt, float relacao){
     float valor = mt * relacao;
@@ -66,116 +77,145 @@ void ChoquedoTrovao(void *poke1, void *poke2){
     printf("%s ataca %s\n", ReturnNome(poke1), ReturnNome(poke2));
     static const float poder = 40;
     static const int tipoAtak = eletrico;
-    int tipoPoke = ReturnTipo(poke1);
 
-    float mt = 1;
-    if(tipoAtak == tipoPoke){
-        mt = 1.5;
+    if(!VerificaImune(poke2)){
+        int tipoPoke = ReturnTipo(poke1);
+
+        float mt = 1;
+        if(tipoAtak == tipoPoke){
+            mt = 1.5;
+        }
+        float DCausado;
+        DCausado = CaulculaDano(poke1, poder, mt, poke2);
+        CausarDano(poke2, DCausado);
     }
-
-    float DCausado;
-    DCausado = CaulculaDano(poke1, poder, mt, poke2);
-    CausarDano(poke2, DCausado);
+    
     float aleatorio = CriaAleatorio();
+
     if(aleatorio <= 0.1){
-        //chama a funcao para paralizar poke2
+        SetParalisado(poke2, 1);
         printf("PARALISOU\n");
     }
 
 }
 
 void OndadeChoque(void *poke1, void *poke2){
+    printf("ONDA DE CHOQUE\n");
+    printf("%s ataca %s\n", ReturnNome(poke1), ReturnNome(poke2));
     static const int tipoAtak = eletrico;
-    //chama a funcao para paralisar o poke2 1 turno
+    SetParalisado(poke2, 1);
 }
 
 void Bater(void *poke1, void *poke2){
     printf("BATER\n");    
     printf("%s ataca %s\n", ReturnNome(poke1), ReturnNome(poke2));
     static const int tipoAtak = normal;
-    const float poder = 40;
-    int tipoPoke = ReturnTipo(poke1);
-    
-    float mt = 1;
-    if(tipoAtak == tipoPoke){
-        mt = 1.5;
-    }
+    static const float poder = 40;
 
-    float DCausado;
-    DCausado = CaulculaDano(poke1, poder, mt, poke2);
-    CausarDano(poke2, DCausado);
+    if(!VerificaImune(poke2)){
+        int tipoPoke = ReturnTipo(poke1);
+        
+        float mt = 1;
+        if(tipoAtak == tipoPoke){
+            mt = 1.5;
+        }
+
+        float DCausado;
+        DCausado = CaulculaDano(poke1, poder, mt, poke2);
+        CausarDano(poke2, DCausado);
+    }
 
 }
 
 void LancaChamas(void *poke1, void *poke2){
     printf("LANCA CHAMAS\n");
     printf("%s ataca %s\n", ReturnNome(poke1), ReturnNome(poke2));
-    const float poder = 90;
+    static const float poder = 90;
     static const int tipoAtak = fogo;
-    int tipoPoke = ReturnTipo(poke1);
-    
-    float mt = 1;
-    if(tipoAtak == tipoPoke){
-        mt = 1.5;
+
+    if(!VerificaImune(poke2)){
+        int tipoPoke = ReturnTipo(poke1);
+        
+        float mt = 1;
+        if(tipoAtak == tipoPoke){
+            mt = 1.5;
+        }
+
+        float DCausado;
+        DCausado = CaulculaDano(poke1, poder, mt, poke2);
+        CausarDano(poke2, DCausado);
     }
 
-    float DCausado;
-    DCausado = CaulculaDano(poke1, poder, mt, poke2);
-    CausarDano(poke2, DCausado);
     float aleatorio = CriaAleatorio();
     if(aleatorio <= 0.1){
-        //chama a funcao de queimar
+        Queimar(poke2);
     }
 }
 
 void Dormir(void *poke1, void *poke2){
+    printf("DORMIR\n");
+    printf("%s ataca %s\n", ReturnNome(poke1), ReturnNome(poke2));
     static const int tipoAtak = normal;
+    SetAtkDormir(poke1, 3);//3 porque a gente quer
 }
 
 void ArmadeAgua(void *poke1, void *poke2){
     printf("ARMA DE AGUA\n");
     printf("%s ataca %s\n", ReturnNome(poke1), ReturnNome(poke2));
-    const float poder = 40;
+    static const float poder = 40;
     static const int tipoAtak = agua;
-    int tipoPoke = ReturnTipo(poke1);
-    
-    float mt = 1;
-    if(tipoAtak == tipoPoke){
-        mt = 1.5;
-    }
 
-    float DCausado;
-    DCausado = CaulculaDano(poke1, poder, mt, poke2);
-    CausarDano(poke2, DCausado);
+    if(!VerificaImune(poke2)){
+        int tipoPoke = ReturnTipo(poke1);
+        
+        float mt = 1;
+        if(tipoAtak == tipoPoke){
+            mt = 1.5;
+        }
+
+        float DCausado;
+        DCausado = CaulculaDano(poke1, poder, mt, poke2);
+        CausarDano(poke2, DCausado);
+    }
 }
 
 void Proteger(void *poke1, void *poke2){
+    printf("PROTEGER\n");
+    printf("%s ataca %s\n", ReturnNome(poke1), ReturnNome(poke2));
     static const int tipoAtak = normal;
+    SetImune(poke1, 2);//porque a gente quer tbm
 }
 
 void PodeSono(void *poke1, void *poke2){
+    printf("PO DE SONO\n");
+    printf("%s ataca %s\n", ReturnNome(poke1), ReturnNome(poke2));
     static const int tipoAtak = planta;
+    int randDormir = (rand() % 3) + 1;
+    SetDormindo(poke2, randDormir);
 }
 
 void BombadeSemente(void *poke1, void *poke2){
     printf("BOMABA DE SEMENTE\n");
     printf("%s ataca %s\n", ReturnNome(poke1), ReturnNome(poke2));
-    const float poder = 80;
+    static const float poder = 80;
     static const int tipoAtak = planta;
-    int tipoPoke = ReturnTipo(poke1);
-    
-    float mt = 1;
-    if(tipoAtak == tipoPoke){
-        mt = 1.5;
-    }
 
-    float DCausado;
-    DCausado = CaulculaDano(poke1, poder, mt, poke2);
-    CausarDano(poke2, DCausado);
+    if(!VerificaImune(poke2)){
+        int tipoPoke = ReturnTipo(poke1);
+        
+        float mt = 1;
+        if(tipoAtak == tipoPoke){
+            mt = 1.5;
+        }
+
+        float DCausado;
+        DCausado = CaulculaDano(poke1, poder, mt, poke2);
+        CausarDano(poke2, DCausado);
+    }
 }
 
 void DoisGumes(void *poke1, void *poke2){
-    printf("AUTO DESTRUIR\n");
+    printf("DOIS GUMES\n");
     printf("%s ataca %s\n", ReturnNome(poke1), ReturnNome(poke2));
     const float poder = 120;
     static const int tipoAtak = normal;
@@ -188,8 +228,13 @@ void DoisGumes(void *poke1, void *poke2){
 
     float DCausado;
     DCausado = CaulculaDano(poke1, poder, mt, poke2);
+    if(!VerificaImune(poke2)){
     CausarDano(poke2, DCausado);
+    }
+
+    if(!VerificaImune(poke1)){
     CausarDano(poke1, (DCausado/3.0));
+    }
 }
 
 void RabodeFerro(void *poke1, void *poke2){
@@ -197,20 +242,27 @@ void RabodeFerro(void *poke1, void *poke2){
     printf("%s ataca %s\n", ReturnNome(poke1), ReturnNome(poke2));
     const float poder = 100;
     static const int tipoAtak = metal;
-    int tipoPoke = ReturnTipo(poke1);
-    
-    float mt = 1;
-    if(tipoAtak == tipoPoke){
-        mt = 1.5;
-    }
 
-    float DCausado;
-    DCausado = CaulculaDano(poke1, poder, mt, poke2);
-    CausarDano(poke2, DCausado);
+    if(!VerificaImune(poke2)){
+        int tipoPoke = ReturnTipo(poke1);
+        
+        float mt = 1;
+        if(tipoAtak == tipoPoke){
+            mt = 1.5;
+        }
+
+        float DCausado;
+        DCausado = CaulculaDano(poke1, poder, mt, poke2);
+        CausarDano(poke2, DCausado);
+    }
 }
 
 void Cavar(void *poke1, void *poke2){
+    printf("CAVAR\n");
+    printf("%s ataca %s\n", ReturnNome(poke1), ReturnNome(poke2));
     static const int tipoAtak = normal;
+    SetImune(poke1, 2);
+    Cavou(poke1);
 }
 
 void Metronomo(void *poke1, void *poke2){}
@@ -220,17 +272,44 @@ void AutoDestruir(void *poke1, void *poke2){
     printf("%s ataca %s\n", ReturnNome(poke1), ReturnNome(poke2));
     const float poder = 200;
     static const int tipoAtak = normal;
-    int tipoPoke = ReturnTipo(poke1);
-    
-    float mt = 1;
-    if(tipoAtak == tipoPoke){
-        mt = 1.5;
+
+    if(!VerificaImune(poke2)){
+        int tipoPoke = ReturnTipo(poke1);
+        
+        float mt = 1;
+        if(tipoAtak == tipoPoke){
+            mt = 1.5;
+        }
+
+        float DCausado;
+        DCausado = CaulculaDano(poke1, poder, mt, poke2);
+        CausarDano(poke2, DCausado);
     }
 
-    float DCausado;
-    DCausado = CaulculaDano(poke1, poder, mt, poke2);
-    CausarDano(poke2, DCausado);
     CausarDano(poke1, 99999);
+}
+
+void DanoCavar(void *poke1, void *poke2){
+    printf("DANO DO CAVAR\n");
+    printf("%s ataca %s\n", ReturnNome(poke1), ReturnNome(poke2));
+    static const int tipoAtak = normal;
+    const float poder = 80;
+
+    if(!VerificaImune(poke2)){
+        int tipoPoke = ReturnTipo(poke1);
+        
+        float mt = 1;
+        if(tipoAtak == tipoPoke){
+            mt = 1.5;
+        }
+
+        float DCausado;
+        DCausado = CaulculaDano(poke1, poder, mt, poke2);
+        CausarDano(poke2, DCausado);
+    }
+    
+    DiminuiCavar(poke1);
+    printf("\n");
 }
 
 void inicializaFptrAtaques(){
@@ -248,6 +327,7 @@ void inicializaFptrAtaques(){
     AllAtks[11] = Cavar;
     AllAtks[12] = AutoDestruir;
     AllAtks[13] = Metronomo;
+    AllAtks[14] = DanoCavar;
 }
 
 void InicializaFptrPokemons(){

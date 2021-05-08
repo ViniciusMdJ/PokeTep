@@ -140,6 +140,11 @@ List* InitIniciais(){
     return escolhidos;
 }
 
+fptrAtaque MovimentoPokemon(tPokemon *poke, int pos){
+    fptrAtaque movimento = ReturnMovimento(poke->Movimentos, pos);
+    return movimento;
+}
+
 void DestroyPokemon(void* Pokemon){
     tPokemon *x = (tPokemon*)Pokemon;
     DestroytAtaques(x->Movimentos);
@@ -175,12 +180,12 @@ float VerificaRelacao(tPokemon *poke1, tPokemon *poke2){
 }
 
 void ResetaStatus(tPokemon *poke){
-    poke->dormindo = -1;
-    poke->paralisado = -1;
-    poke->queimando = -1;
+    poke->dormindo = 0;
+    poke->paralisado = 0;
+    poke->queimando = 0;
     poke->atkDormir = -1;
-    poke->imune = -1;
-    poke->cavar = -1;
+    poke->imune = 0;
+    poke->cavar = 0;
 }
 
 void AumenteHp(tPokemon *poke, float qtd){
@@ -195,7 +200,7 @@ char *NomedoAtk(tPokemon *poke, int pos){
 }
 
 int PodeAtacar(tPokemon *poke){
-    if(!poke->paralisado && !poke->dormindo && (poke->atkDormir <= 0)){
+    if((poke->paralisado == 0) && (poke->dormindo == 0) && (poke->atkDormir <= 0)){
         return 1;
     }
     return 0;
@@ -206,4 +211,89 @@ int Queimando(tPokemon *poke){
         return 1;
     }
     return 0;
+}
+
+void DiminuiDormindo(tPokemon *x){
+    if(x->dormindo > 0){
+        x->dormindo--;
+    }
+}
+
+void DiminuiParalisado(tPokemon *x){
+    if(x->paralisado > 0){
+        x->paralisado--;
+    }
+}
+
+void DiminuiImune(tPokemon *x){
+    if(x->imune > 0){
+        x->imune--;
+    }
+}
+
+void DiminuiAtkDormir(tPokemon *x){
+    if(x->atkDormir > -1){
+        x->atkDormir--;
+    }
+}
+
+void DiminuiCavar(tPokemon *poke){
+    if(poke->cavar > 0){
+        poke->cavar--;
+    }
+}
+
+void Queimar(tPokemon *x){
+    if(x->tipo != fogo){
+        x->queimando = 1;
+    }
+}
+
+void SetDormindo(tPokemon *poke, int x){
+    if(poke->dormindo < x){
+        poke->dormindo = x;
+    }
+}
+
+void SetParalisado(tPokemon *poke, int x){
+    if(poke->paralisado < x){
+        poke->paralisado = x;
+    }
+}
+
+void SetImune(tPokemon *poke, int x){
+    if(poke->imune < x){
+        poke->imune = x;
+    }
+}
+
+void SetAtkDormir(tPokemon *poke, int x){
+    if(poke->atkDormir < x){
+        poke->atkDormir = x;
+    }
+}
+
+int VerificaAtkDormir(tPokemon *x){
+    if(x->atkDormir == 0){
+        return 1;
+    }
+    return 0;
+}
+
+int VerificaCavar(tPokemon *x){
+    if(x->cavar == 1){
+        return 1;
+    }
+    return 0;
+}
+
+int VerificaImune(tPokemon *x){
+    if(x->imune > 0){
+        return 1;
+    }
+    return 0;
+}
+
+void Cavou(tPokemon *x){
+    x->cavar = 1;
 }

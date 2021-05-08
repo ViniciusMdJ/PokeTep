@@ -42,7 +42,6 @@ void MenuPrincipal(char* arqPontuacao,char* arqLogs){
             opcao = VerificaEntre(aux, 1, 3);
             if(opcao == 1){
                 Player = newPlayer();
-                destroyJogador(Player);
                 vitoriasPlayer = ReturnVitorias(Player);
                 pokePlayer = ReturnListaPoke(Player);
                 qtdPokebolas = ReturnqtdPokebola(Player);
@@ -75,9 +74,11 @@ int MenuBatalha(tPokemon *poke, int qtdPokebola){
     printf("1- %s\n", NomedoAtk(poke, 0));
     printf("2- %s\n", NomedoAtk(poke, 1));
     printf("3- %s\n", NomedoAtk(poke, 2));
-    printf("4- Tentar capiturar (%d pokebola)", qtdPokebola);
-    printf("5- Fugir");
+    printf("4- Tentar capiturar (%d pokebola)\n", qtdPokebola);
+    printf("5- Fugir\n");
     do{
+        scanf("%s", op);
+        getchar();//pegaro maldito \n q o scan nao le
         escolha = VerificaEntre(op, 1, 5);
         if(escolha == 4 && !qtdPokebola){
             escolha = 0;

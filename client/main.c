@@ -17,7 +17,7 @@ int main(int argc, char *argv[]){
     InicializaFptrPokemons();
 
     MenuPrincipal(CaminhoPont, CaminhoLogs); 
-    
+
 
 
 return 0;
