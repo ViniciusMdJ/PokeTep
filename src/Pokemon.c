@@ -128,7 +128,7 @@ List* InitIniciais(){
     tPokemon *retirado;
     int opcao;
     
-    for(i=0; i<3; i++){
+    for(i=0; i<2; i++){
         opcao = MenuEscolha(iniciais);
         retirado = (tPokemon*)BuscaRetorna(iniciais, opcao);
         InserirUlt(escolhidos, retirado);
@@ -153,14 +153,14 @@ void DestroyPokemon(void* Pokemon){
 }
 
 void CausarDano(tPokemon *poke, float dano){
-    printf("VIDA ANTES %f\n", poke->HPatual);
+    //printf("VIDA ANTES %f\n", poke->HPatual);
     if(poke->HPatual >= dano){
         poke->HPatual -= dano;
     }
     else{
         poke->HPatual = 0;
     }
-    printf("VIDA DEPOIS %f\n", poke->HPatual);
+    //printf("VIDA DEPOIS %f\n", poke->HPatual);
 }
 
 float VerificaRelacao(tPokemon *poke1, tPokemon *poke2){
@@ -296,4 +296,31 @@ int VerificaImune(tPokemon *x){
 
 void Cavou(tPokemon *x){
     x->cavar = 1;
+}
+
+void Capturar(List *Pokemons, tPokemon *capiturado){
+    capiturado->HPatual = capiturado->HPmax;
+    capiturado->dormindo = 0;
+    capiturado->paralisado = 0;
+    capiturado->queimando = 0;
+    capiturado->atkDormir = -1;
+    capiturado->imune = 0;
+    capiturado->cavar = 0;
+
+    InserirUlt(Pokemons, capiturado);
+    free(capiturado);
+}
+
+int VerificaParalisado(tPokemon *x){
+    if(x->paralisado){
+        return 1;
+    }
+    return 0;
+}
+
+int VerificaDormindo(tPokemon *x){
+    if(x->dormindo || x->atkDormir > 0){
+        return 1;
+    }
+    return 0;
 }

@@ -26,7 +26,7 @@ return escolha;
 
 void MenuPrincipal(char* arqPontuacao,char* arqLogs){
     char aux[128];
-    int  opcao, *vitoriasPlayer, qtdPokebolas; 
+    int  opcao, vitoriasPlayer; 
     tJogador *Player;
     List *pokePlayer;
 
@@ -42,12 +42,10 @@ void MenuPrincipal(char* arqPontuacao,char* arqLogs){
             opcao = VerificaEntre(aux, 1, 3);
             if(opcao == 1){
                 Player = newPlayer();
-                vitoriasPlayer = ReturnVitorias(Player);
-                pokePlayer = ReturnListaPoke(Player);
-                qtdPokebolas = ReturnqtdPokebola(Player);
-                *vitoriasPlayer = batalha(pokePlayer, qtdPokebolas);
+                vitoriasPlayer = batalha(Player);
                 //salva pontuacao jogador e volta pro menu principal;
                 getchar();
+                destroyJogador(Player);
                 
                 break;
             }
@@ -88,5 +86,6 @@ int MenuBatalha(tPokemon *poke, int qtdPokebola){
         }
     }while(!escolha);
 
+    free(op);
     return escolha;
 }

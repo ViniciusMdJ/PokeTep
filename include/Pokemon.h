@@ -71,5 +71,11 @@ int VerificaCavar(tPokemon *x);
 
 int VerificaImune(tPokemon *x);
 
+int VerificaParalisado(tPokemon *x);
+
+int VerificaDormindo(tPokemon *x);
+
 void Cavou(tPokemon *x);
+
+void Capturar(List *Pokemons, tPokemon *capiturado);
 #endif

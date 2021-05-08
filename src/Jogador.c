@@ -36,7 +36,7 @@ tJogador *newPlayer(){
     }
 
     novo->nickname = strdup(nome);
-    novo->qtdPokebola = 3;
+    novo->qtdPokebola = 100;
     novo->vitorias = 0;
     novo->Pokemons = InitIniciais();
     ImprimeLista(novo->Pokemons);
@@ -72,4 +72,8 @@ int *ReturnVitorias(tJogador *x){
 
 int ReturnqtdPokebola(tJogador *x){
     return x->qtdPokebola;
+}
+
+char *ReturnNomeJogador(tJogador *x){
+    return x->nickname;
 }

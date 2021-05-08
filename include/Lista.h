@@ -24,5 +24,4 @@ int ImprimeLista(List* x);
 void RemoveFirst(List *poke);
 
 void *ReturnFirstPoke(List *x);
-
 #endif

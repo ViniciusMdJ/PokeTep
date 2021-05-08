@@ -25,4 +25,6 @@ int *ReturnVitorias(tJogador *x);
 
 int ReturnqtdPokebola(tJogador *x);
 
+char *ReturnNomeJogador(tJogador *x);
+
 #endif //JOGADOR_H
