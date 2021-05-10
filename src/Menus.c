@@ -24,11 +24,17 @@ int MenuEscolha(List* Lista){
 return escolha;
 }
 
-void MenuPrincipal(char* arqPontuacao,char* arqLogs){
+void MenuPrincipal(char* caminhoPontuacao,char* caminhoLogs){
     char aux[128];
     int  opcao, vitoriasPlayer; 
     tJogador *Player;
     List *pokePlayer;
+    FILE *arqLogs = fopen(caminhoLogs, "w");
+
+    if(arqLogs == NULL){
+        printf("Arquivo de Log's nao foi aberto\n");
+        exit(1);
+    }
 
     while(1){
         Clean();
@@ -42,19 +48,20 @@ void MenuPrincipal(char* arqPontuacao,char* arqLogs){
             opcao = VerificaEntre(aux, 1, 3);
             if(opcao == 1){
                 Player = newPlayer();
-                vitoriasPlayer = batalha(Player);
-                //salva pontuacao jogador e volta pro menu principal;
+                vitoriasPlayer = batalha(Player, arqLogs);
+                addNewPontuacao(vitoriasPlayer, ReturnNomeJogador(Player), caminhoPontuacao);
                 getchar();
-                destroyJogador(Player);
                 
+                destroyJogador(Player);                
                 break;
             }
             else if(opcao == 2){
-                imprimePontuacao(arqPontuacao);
+                imprimePontuacao(caminhoPontuacao);
                 break;
             }
             else if(opcao == 3){
                 Clean();
+                fclose(arqLogs);
                 return;
             }
             else{

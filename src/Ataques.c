@@ -265,7 +265,14 @@ void Cavar(void *poke1, void *poke2){
     Cavou(poke1);
 }
 
-void Metronomo(void *poke1, void *poke2){}
+void Metronomo(void *poke1, void *poke2){
+    int atkRand;
+    fptrAtaque atkpoke;
+
+    atkRand = rand() % 13;
+    atkpoke = AllAtks[atkRand];
+    atkpoke(poke1, poke2);
+}
 
 void AutoDestruir(void *poke1, void *poke2){
     //printf("AUTO DESTRUIR\n");

@@ -9,14 +9,17 @@
 
 int main(int argc, char *argv[]){
     srand(time(0));
-    char* CaminhoPont = "data/pontuacao.txt";
-    char* CaminhoLogs;
+    char* CaminhoPont = strdup("data/pontuacao.txt");
+    char* CaminhoLogs = strdup("data/Logs.txt");
 
 
     inicializaFptrAtaques();
     InicializaFptrPokemons();
 
-    MenuPrincipal(CaminhoPont, CaminhoLogs); 
+    MenuPrincipal(CaminhoPont, CaminhoLogs);
+
+    free(CaminhoPont);
+    free(CaminhoLogs);
 
 
 

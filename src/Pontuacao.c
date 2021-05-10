@@ -101,7 +101,6 @@ void addNewPontuacao(int partidas, char *nick, char *caminho){
     ant->prox = novo;
 
     salvaPontuacao(lista, caminho);
-    imprimePontuacao(caminho);
     destroyPontuacao(lista);
 
 }

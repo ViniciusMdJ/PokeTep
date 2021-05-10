@@ -8,27 +8,34 @@
 #include "../include/Pokemon.h"
 
 
-int batalha(tJogador *player){
+int batalha(tJogador *player, FILE *arqLog){
+
     int qtdPokebola = ReturnqtdPokebola(player);
     List *ListaJogador = ReturnListaPoke(player);
     char *NomePlayer = ReturnNomeJogador(player);
-    static int qtdBatalha = 0;
-    qtdBatalha++;
-    int qtdVitorias = 0, pokeBatalhados = 0, ultimaPokebola = 0, UltimoMew = 0, opJogador, randMaquina;
+    static int qtdPartida = 0;
+    qtdPartida++;
+    int qtdVitorias = 0, numBatalhas = 1, ultimaPokebola = 0, UltimoMew = 0, opJogador, randMaquina;
     float random, HpMax, aux;
     float *HpPokeJogador, *HpMaquina, i = 0; 
+    //ele recebe o endereco de i para nao dar acesso indevido quando liberamos
+    //a maquina e ja sabemos que o valor da vida da maquina é = 0
     HpMaquina = &i;
-
+    
     fptrAtaque AtaquePokemon;
 
     tPokemon *maquina = NULL, *pokeJogador;
     pokeJogador = (tPokemon*) ReturnFirstPoke(ListaJogador);
     HpPokeJogador = ReturnHPatual(pokeJogador);
 
-    
+    Clean();
     printf("A batalha comecou!\n\n");
     while(pokeJogador != NULL){
         if(*HpMaquina == 0){
+            if(maquina != NULL){
+                DestroyPokemon(maquina);
+                free(maquina);
+            }
             random = CriaAleatorio();
             if(random <= (UltimoMew/128.0)){
                 printf("Um Mew selvagem apareceu!\n\n");
@@ -49,9 +56,13 @@ int batalha(tJogador *player){
 
                 printf("Um %s selvagem apareceu!\n\n", ReturnNome(maquina));
             }
+            getchar();
         }
         
+        fprintf(arqLog, "%d.%d- %s vs %s\n", qtdPartida, numBatalhas, ReturnNome(pokeJogador), ReturnNome(maquina));
+
         while(1){
+            Clean();
 
             //ataque do Jogador
             if(pokeJogador){//pokemon do jogador nao for nulo
@@ -68,17 +79,18 @@ int batalha(tJogador *player){
                 if((*HpPokeJogador) > 0){
                     if(PodeAtacar(pokeJogador)){
                         opJogador = MenuBatalha(pokeJogador, qtdPokebola);
+                        Clean();
                         if(opJogador == 5){
                             printf("Tentativa de fugir\n");
                             random = CriaAleatorio();
                             if(random <= (1.0/16.0)){
+                                LogFugir(arqLog, 1);
                                 HpMaquina = &i;
                                 printf("Sucesso\n\n");
                                 getchar();
-                                DestroyPokemon(maquina);
-                                free(maquina);
                                 break;
                             }
+                            LogFugir(arqLog, 0);
                             printf("Fracasso\n\n");
                             getchar();
                         }
@@ -90,16 +102,26 @@ int batalha(tJogador *player){
                                 aux = (HpMax/ (*HpMaquina)) / 20;
                                 random = CriaAleatorio();
                                 if(random <= aux){
+                                    LogCaptura(arqLog, 1);
                                     printf("Sucesso\n\n");
                                     Capturar(ListaJogador, maquina);
                                     maquina = NULL;
                                     HpMaquina = &i;
                                     qtdPokebola--;
                                     qtdVitorias++;
+                                    random = CriaAleatorio();
+                                    if(random <= (ultimaPokebola/12.0)){
+                                        qtdPokebola++;
+                                        ultimaPokebola = 0;
+                                    }
+                                    else{
+                                        ultimaPokebola++;
+                                    }
                                     getchar();
                                     break;
                                 }
                                 else{
+                                    LogCaptura(arqLog, 0);
                                     printf("Fracasso\n\n");
                                     qtdPokebola--;
                                     getchar();
@@ -116,35 +138,55 @@ int batalha(tJogador *player){
                             AtaquePokemon = MovimentoPokemon(pokeJogador, opJogador-1);
                             AtaquePokemon(pokeJogador, maquina);
                             DadosAtaqueJogador(pokeJogador, maquina, opJogador-1);
+                            LogAtaqueJogador(arqLog, pokeJogador, maquina, opJogador-1);
                         }
 
                         if((*HpPokeJogador) == 0){
+                            printf("%s foi desmaiado!\n\n", ReturnNome(pokeJogador));
+                            fprintf(arqLog, "\t%s perde!\n\n", NomePlayer);
+                            numBatalhas++;
+                            getchar();
                             RemoveFirst(ListaJogador);
                             pokeJogador = (tPokemon*) ReturnFirstPoke(ListaJogador);
+                            ResetaStatus(maquina);
                             if(pokeJogador){
                                 HpPokeJogador = ReturnHPatual(pokeJogador);
+                                printf("Agora voce esta batalhando com %s\n\n", ReturnNome(pokeJogador));
+                                getchar();
                             }
                             break;
                         }
                         if((*HpMaquina) == 0){
                             printf("%s vence!\n\n", NomePlayer);
+                            fprintf(arqLog, "\t%s vence!\n\n", NomePlayer);
+                            numBatalhas++;
                             qtdVitorias++;
-                            DestroyPokemon(maquina);
-                            free(maquina);
+                            random = CriaAleatorio();
+                            if(random <= (ultimaPokebola/12.0)){
+                                qtdPokebola++;
+                                ultimaPokebola = 0;
+                            }
+                            else{
+                                ultimaPokebola++;
+                            }
                             HpMaquina = &i;
                             break;
                         }
                     }
                     else{
-                        printf("Jogador paralisado ou dormindo\n\n");
+                        printf("O seu Pokemon esta imposibilitado de atacar(paralisado e/ou dormindo\n\n");
+                        getchar();
                     }
                 }
                 else{
                     //Vida do pokeJogador = 0
                     printf("%s foi desmaiado!\n\n", ReturnNome(pokeJogador));
+                    fprintf(arqLog, "\t%s perde!\n\n", NomePlayer);
+                    numBatalhas++;
                     getchar();
                     RemoveFirst(ListaJogador);
                     pokeJogador = (tPokemon*) ReturnFirstPoke(ListaJogador);
+                    ResetaStatus(maquina);
                     if(pokeJogador){
                         HpPokeJogador = ReturnHPatual(pokeJogador);
                         printf("Agora voce esta batalhando com %s\n\n", ReturnNome(pokeJogador));
@@ -160,9 +202,12 @@ int batalha(tJogador *player){
 
             if((*HpPokeJogador) == 0){
                 printf("%s foi desmaiado!\n\n", ReturnNome(pokeJogador));
+                fprintf(arqLog, "\t%s perde!\n\n", NomePlayer);
+                numBatalhas++;
                 getchar();
                 RemoveFirst(ListaJogador);
                 pokeJogador = (tPokemon*) ReturnFirstPoke(ListaJogador);
+                ResetaStatus(maquina);
                 if(pokeJogador){
                     HpPokeJogador = ReturnHPatual(pokeJogador);
                     printf("Agora voce esta batalhando com %s\n\n", ReturnNome(pokeJogador));
@@ -198,20 +243,26 @@ int batalha(tJogador *player){
                         AtaquePokemon = MovimentoPokemon(maquina, randMaquina);
                         AtaquePokemon(maquina, pokeJogador);
                         DadosAtaqueMaquina(maquina, pokeJogador, randMaquina);
-                        //getchar();
-                        //printf("\n\n");
-                        //chama o log
+                        LogAtaqueMaquina(arqLog, maquina, pokeJogador, randMaquina);
                     }
                     else{
-                        printf("Maquina paralisada ou dormindo\n\n");
+                        printf("O Pokemon selvagem esta imposibilitado de atacar(paralisado e/ou dormindo\n\n");
                         getchar();
                     }
                 }
                 else{
                     printf("%s vence!\n\n", NomePlayer);
+                    fprintf(arqLog, "\t%s vence!\n\n", NomePlayer);
+                    numBatalhas++;
                     qtdVitorias++;
-                    DestroyPokemon(maquina);
-                    free(maquina);
+                    random = CriaAleatorio();
+                    if(random <= (ultimaPokebola/12.0)){
+                        qtdPokebola++;
+                        ultimaPokebola = 0;
+                    }
+                    else{
+                        ultimaPokebola++;
+                    }
                     HpMaquina = &i;
                     getchar();
                     break;
@@ -219,9 +270,12 @@ int batalha(tJogador *player){
 
                 if((*HpPokeJogador) == 0){
                     printf("%s foi desmaiado!\n\n", ReturnNome(pokeJogador));
+                    fprintf(arqLog, "\t%s perde!\n\n", NomePlayer);
+                    numBatalhas++;
                     getchar();
                     RemoveFirst(ListaJogador);
                     pokeJogador = (tPokemon*) ReturnFirstPoke(ListaJogador);
+                    ResetaStatus(maquina);
                     if(pokeJogador){
                         HpPokeJogador = ReturnHPatual(pokeJogador);
                         printf("Agora voce esta batalhando com %s\n\n", ReturnNome(pokeJogador));
@@ -231,17 +285,27 @@ int batalha(tJogador *player){
                 }
                 if((*HpMaquina) == 0){
                     printf("%s vence!\n\n", NomePlayer);
+                    fprintf(arqLog, "\t%s vence!\n\n", NomePlayer);
+                    numBatalhas++;
                     qtdVitorias++;
-                    DestroyPokemon(maquina);
-                    free(maquina);
+                    random = CriaAleatorio();
+                    if(random <= (ultimaPokebola/12.0)){
+                        qtdPokebola++;
+                        ultimaPokebola = 0;
+                    }
+                    else{
+                        ultimaPokebola++;
+                    }
                     HpMaquina = &i;
                     getchar();
                     break;
                 }
             }
             else{
+                //pokeJogador = NULL
                 break;
             }
+
             DiminuiAtkDormir(pokeJogador);
             DiminuiDormindo(maquina);
             DiminuiImune(maquina);
@@ -249,10 +313,11 @@ int batalha(tJogador *player){
         }
 
     }
+    fprintf(arqLog, "\tFim do jogo %d %s sebreviveu %d batalhas\n\n", qtdPartida, NomePlayer, qtdVitorias);
+    printf("A batalha terminou! %s conseguiu %d vitorias\n\n", NomePlayer, qtdVitorias);
+
     DestroyPokemon(maquina);
     free(maquina);
-    printf("A batalha terminou! %s conseguiu %d vitorias\n\n", NomePlayer, qtdVitorias);
-    getchar();
     return qtdVitorias;
 }
 
@@ -269,7 +334,7 @@ void DadosAtaqueJogador(tPokemon *poke1, tPokemon *poke2, int pos){
     Hpmax = ReturnHPmax(poke1);
     Hpatual = ReturnHPatual(poke1);
     por100 = (*Hpatual/Hpmax) * 100;
-    printf("%s: %.0f%% HP", pokeJogador, por100);
+    printf("%s: %.0f%% HP ", pokeJogador, por100);
     queimando = Queimando(poke1);
     dormindo  = VerificaDormindo(poke1);
     paralisado = VerificaParalisado(poke1);
@@ -278,7 +343,7 @@ void DadosAtaqueJogador(tPokemon *poke1, tPokemon *poke2, int pos){
     Hpmax = ReturnHPmax(poke2);
     Hpatual = ReturnHPatual(poke2);
     por100 = (*Hpatual/Hpmax) * 100;
-    printf("%s: %.0f%% HP", pokeMaquina, por100);
+    printf("%s: %.0f%% HP ", pokeMaquina, por100);
     queimando = Queimando(poke2);
     dormindo  = VerificaDormindo(poke2);
     paralisado = VerificaParalisado(poke2);
@@ -330,4 +395,98 @@ void PrintaStatus(int p, int d, int q){
     else if(p && d && !q){printf("(paralisado, dormindo)\n");}
     else if(!p && d && q){printf("(dormindo, queimando)\n");}
     else if(p && d && q){printf("(paralisado, dormindo, queimando)\n");}
+}
+
+void LogAtaqueJogador(FILE *arqLog, tPokemon *poke1, tPokemon *poke2, int pos){
+    float Hpmax, *Hpatual, por100;
+    char *pokeJogador, *pokeMaquina, *nomeAtk;
+    int dormindo, queimando, paralisado;
+
+    pokeJogador = ReturnNome(poke1);
+    pokeMaquina = ReturnNome(poke2);
+    nomeAtk = NomedoAtk(poke1, pos);
+
+    fprintf(arqLog, "\t%s usa %s\n", pokeJogador, nomeAtk);
+    Hpmax = ReturnHPmax(poke1);
+    Hpatual = ReturnHPatual(poke1);
+    por100 = (*Hpatual/Hpmax) * 100;
+    fprintf(arqLog, "\t%s: %.0f%% HP ", pokeJogador, por100);
+    queimando = Queimando(poke1);
+    dormindo  = VerificaDormindo(poke1);
+    paralisado = VerificaParalisado(poke1);
+    LogStatus(arqLog, paralisado, dormindo, queimando); 
+
+    Hpmax = ReturnHPmax(poke2);
+    Hpatual = ReturnHPatual(poke2);
+    por100 = (*Hpatual/Hpmax) * 100;
+    fprintf(arqLog, "\t%s: %.0f%% HP ", pokeMaquina, por100);
+    queimando = Queimando(poke2);
+    dormindo  = VerificaDormindo(poke2);
+    paralisado = VerificaParalisado(poke2);
+    LogStatus(arqLog, paralisado, dormindo, queimando);
+    fprintf(arqLog, "\n");
+}
+
+void LogAtaqueMaquina(FILE *arqLog, tPokemon *poke1, tPokemon *poke2, int pos){
+    float Hpmax, *Hpatual, por100;
+    char *pokeJogador, *pokeMaquina, *nomeAtk;
+    int dormindo, queimando, paralisado;
+
+    pokeJogador = ReturnNome(poke2);
+    pokeMaquina = ReturnNome(poke1);
+    nomeAtk = NomedoAtk(poke1, pos);
+
+    fprintf(arqLog, "\t%s usa %s\n", pokeMaquina, nomeAtk);
+    Hpmax = ReturnHPmax(poke2);
+    Hpatual = ReturnHPatual(poke2);
+    por100 = (*Hpatual/Hpmax) * 100;
+    fprintf(arqLog, "\t%s: %.0f%% HP ", pokeJogador, por100);
+
+    queimando = Queimando(poke2);
+    dormindo  = VerificaDormindo(poke2);
+    paralisado = VerificaParalisado(poke2);
+    LogStatus(arqLog, paralisado, dormindo, queimando);    
+    
+
+    Hpmax = ReturnHPmax(poke1);
+    Hpatual = ReturnHPatual(poke1);
+    por100 = (*Hpatual/Hpmax) * 100;
+    fprintf(arqLog, "\t%s: %.0f%% HP ", pokeMaquina, por100);
+
+    queimando = Queimando(poke1);
+    dormindo  = VerificaDormindo(poke1);
+    paralisado = VerificaParalisado(poke1);
+    LogStatus(arqLog, paralisado, dormindo, queimando); 
+    fprintf(arqLog, "\n");
+}
+
+void LogStatus(FILE *arqLog,int p, int d, int q){
+    if(!p && !d && !q){fprintf(arqLog, "\n");}
+    else if(p && !d && !q){fprintf(arqLog, "(paralisado)\n");}
+    else if(!p && d && !q){fprintf(arqLog, "(dormindo)\n");}
+    else if(!p && !d && q){fprintf(arqLog, "(queimando)\n");}
+    else if(p && !d && q){fprintf(arqLog, "(paralisado, queimando)\n");}
+    else if(p && d && !q){fprintf(arqLog, "(paralisado, dormindo)\n");}
+    else if(!p && d && q){fprintf(arqLog, "(dormindo, queimando)\n");}
+    else if(p && d && q){fprintf(arqLog, "(paralisado, dormindo, queimando)\n");}
+}
+
+void LogCaptura(FILE *arqLog, int tentativa){
+    fprintf(arqLog, "\tTentativa de captura\n");
+    if(tentativa){
+        fprintf(arqLog, "\tSucesso\n\n");
+    }
+    else{
+        fprintf(arqLog, "\tFracasso\n\n");
+    }
+}
+
+void LogFugir(FILE *arqLog, int tentativa){
+    fprintf(arqLog, "\tTentativa de Fuga\n");
+    if(tentativa){
+        fprintf(arqLog, "\tSucesso\n\n");
+    }
+    else{
+        fprintf(arqLog, "\tFracasso\n\n");
+    }
 }

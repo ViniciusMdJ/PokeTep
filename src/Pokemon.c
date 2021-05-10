@@ -85,12 +85,7 @@ tPokemon *ListaPoke(int i){
         Poke->Movimentos = funcao();
     }
 
-    Poke->dormindo = 0;
-    Poke->paralisado = 0;
-    Poke->queimando = 0;
-    Poke->atkDormir = -1;
-    Poke->imune = 0;
-    Poke->cavar = 0;
+    ResetaStatus(Poke);
 
 return Poke;
 }
@@ -128,7 +123,7 @@ List* InitIniciais(){
     tPokemon *retirado;
     int opcao;
     
-    for(i=0; i<2; i++){
+    for(i=0; i<1; i++){
         opcao = MenuEscolha(iniciais);
         retirado = (tPokemon*)BuscaRetorna(iniciais, opcao);
         InserirUlt(escolhidos, retirado);
