@@ -21,4 +21,7 @@ void *BuscaRetorna(List* lista, int pos);
 
 int ImprimeLista(List* x);
 
+void RemoveFirst(List *poke);
+
+void *ReturnFirstPoke(List *x);
 #endif

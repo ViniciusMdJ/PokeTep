@@ -10,9 +10,12 @@ typedef struct pokemon {
     char* nome;
     int tipo;
 
-    int dormindo;
-    int queimando;
-    int paralisado;
+    int dormindo;//     0 = padrao, 0 > dormindo    
+    int queimando;//    0 = padrao, 1 = queimando
+    int paralisado;//   0 = padrao, 0 > paralisado
+    int atkDormir;//    -1 = padrao, 0 = recupera HP, 0 > Dormindo
+    int imune;//        0 = padrao, 0 > nao toma dano
+    int cavar;//        0 = padrao, 1 = da o dano
 
     tAtaque *Movimentos;
 
@@ -23,67 +26,67 @@ typedef struct pokemon {
 } tPokemon;
 
 
-tPokemon ListaPoke(int i){
-    tPokemon Poke;
+tPokemon *ListaPoke(int i){
+    tPokemon *Poke;
+    Poke = malloc(sizeof(tPokemon));
     fptrInicializaPoke funcao = ReturnInicializador(i);
     if(i == 0){
-        Poke.nome = strdup("Picachu");
-        Poke.tipo = eletrico;
-        Poke.ataque = 110;
-        Poke.defesa = 100;
-        Poke.HPmax = 200;
-        Poke.HPatual = Poke.HPmax;
-        Poke.Movimentos = funcao();
+        Poke->tipo = eletrico;
+        Poke->ataque = 110;
+        Poke->defesa = 100;
+        Poke->nome = strdup("Picachu");
+        Poke->HPmax = 200;
+        Poke->HPatual = Poke->HPmax;
+        Poke->Movimentos = funcao();
     }
     else if(i == 1){
-        Poke.nome = strdup("Charizard");
-        Poke.tipo = fogo;
-        Poke.ataque = 160;
-        Poke.defesa = 150;
-        Poke.HPmax = 260;
-        Poke.HPatual = Poke.HPmax;
-        Poke.Movimentos = funcao();
+        Poke->nome = strdup("Charizard");
+        Poke->tipo = fogo;
+        Poke->ataque = 160;
+        Poke->defesa = 150;
+        Poke->HPmax = 260;
+        Poke->HPatual = Poke->HPmax;
+        Poke->Movimentos = funcao();
     }
     else if(i == 2){
-        Poke.nome = strdup("Blastoise");
-        Poke.tipo = agua;
-        Poke.ataque = 180;
-        Poke.defesa = 200;
-        Poke.HPmax = 280;
-        Poke.HPatual = Poke.HPmax;
-        Poke.Movimentos = funcao();
+        Poke->nome = strdup("Blastoise");
+        Poke->tipo = agua;
+        Poke->ataque = 180;
+        Poke->defesa = 200;
+        Poke->HPmax = 280;
+        Poke->HPatual = Poke->HPmax;
+        Poke->Movimentos = funcao();
     }
     else if(i == 3){
-        Poke.nome = strdup("Venusaur");
-        Poke.tipo = planta;
-        Poke.ataque = 160;
-        Poke.defesa = 160;
-        Poke.HPmax = 300;
-        Poke.HPatual = Poke.HPmax;
-        Poke.Movimentos = funcao();
+        Poke->nome = strdup("Venusaur");
+        Poke->tipo = planta;
+        Poke->ataque = 160;
+        Poke->defesa = 160;
+        Poke->HPmax = 300;
+        Poke->HPatual = Poke->HPmax;
+        Poke->Movimentos = funcao();
     }
     else if(i == 4){
-        Poke.nome = strdup("Steelix");
-        Poke.tipo = metal;
-        Poke.ataque = 170;
-        Poke.defesa = 400;
-        Poke.HPmax = 280;
-        Poke.HPatual = Poke.HPmax;
-        Poke.Movimentos = funcao();
+        Poke->nome = strdup("Steelix");
+        Poke->tipo = metal;
+        Poke->ataque = 170;
+        Poke->defesa = 400;
+        Poke->HPmax = 280;
+        Poke->HPatual = Poke->HPmax;
+        Poke->Movimentos = funcao();
     }
     else if(i == 5){
-        Poke.nome = strdup("Mew");
-        Poke.tipo = psiquico;
-        Poke.ataque = 200;
-        Poke.defesa = 200;
-        Poke.HPmax = 320;
-        Poke.HPatual = Poke.HPmax;
-        Poke.Movimentos = funcao();
+        Poke->nome = strdup("Mew");
+        Poke->tipo = psiquico;
+        Poke->ataque = 200;
+        Poke->defesa = 200;
+        Poke->HPmax = 320;
+        Poke->HPatual = Poke->HPmax;
+        Poke->Movimentos = funcao();
     }
 
-    Poke.dormindo = -1;
-    Poke.paralisado = -1;
-    Poke.queimando = -1;
+    ResetaStatus(Poke);
+
 return Poke;
 }
 char* ReturnNome(tPokemon* Poke){
@@ -107,19 +110,20 @@ int ReturnTipo(tPokemon* Poke){
 
 List* InitIniciais(){
     List *iniciais, *escolhidos;
-    tPokemon poke;
+    tPokemon *poke;
     iniciais = InitLista(sizeof(tPokemon), DestroyPokemon);
     int i;
     for(i=0; i<6; i++){
         poke = ListaPoke(i);
-        InserirUlt(iniciais, &poke);
+        InserirUlt(iniciais, poke);
+        free(poke);
     }
 
     escolhidos = InitLista(sizeof(tPokemon), DestroyPokemon);
     tPokemon *retirado;
     int opcao;
     
-    for(i=0; i<3; i++){
+    for(i=0; i<1; i++){
         opcao = MenuEscolha(iniciais);
         retirado = (tPokemon*)BuscaRetorna(iniciais, opcao);
         InserirUlt(escolhidos, retirado);
@@ -131,6 +135,11 @@ List* InitIniciais(){
     return escolhidos;
 }
 
+fptrAtaque MovimentoPokemon(tPokemon *poke, int pos){
+    fptrAtaque movimento = ReturnMovimento(poke->Movimentos, pos);
+    return movimento;
+}
+
 void DestroyPokemon(void* Pokemon){
     tPokemon *x = (tPokemon*)Pokemon;
     DestroytAtaques(x->Movimentos);
@@ -139,14 +148,14 @@ void DestroyPokemon(void* Pokemon){
 }
 
 void CausarDano(tPokemon *poke, float dano){
-    printf("VIDA ANTES %f\n", poke->HPatual);
+    //printf("VIDA ANTES %f\n", poke->HPatual);
     if(poke->HPatual >= dano){
         poke->HPatual -= dano;
     }
     else{
         poke->HPatual = 0;
     }
-    printf("VIDA DEPOIS %f\n", poke->HPatual);
+    //printf("VIDA DEPOIS %f\n", poke->HPatual);
 }
 
 float VerificaRelacao(tPokemon *poke1, tPokemon *poke2){
@@ -163,4 +172,150 @@ float VerificaRelacao(tPokemon *poke1, tPokemon *poke2){
     float relacao = relacoes[tipoPoke1][tipoPoke2];
 
     return relacao;
+}
+
+void ResetaStatus(tPokemon *poke){
+    poke->dormindo = 0;
+    poke->paralisado = 0;
+    poke->queimando = 0;
+    poke->atkDormir = -1;
+    poke->imune = 0;
+    poke->cavar = 0;
+}
+
+void AumenteHp(tPokemon *poke, float qtd){
+    poke->HPatual += qtd;
+    if(poke->HPatual > poke->HPmax){
+        poke->HPatual = poke->HPmax;
+    }
+}
+
+char *NomedoAtk(tPokemon *poke, int pos){
+    return ReturnNomeAtk(poke->Movimentos, pos);
+}
+
+int PodeAtacar(tPokemon *poke){
+    if((poke->paralisado == 0) && (poke->dormindo == 0) && (poke->atkDormir <= 0)){
+        return 1;
+    }
+    return 0;
+}
+
+int Queimando(tPokemon *poke){
+    if(poke->queimando){
+        return 1;
+    }
+    return 0;
+}
+
+void DiminuiDormindo(tPokemon *x){
+    if(x->dormindo > 0){
+        x->dormindo--;
+    }
+}
+
+void DiminuiParalisado(tPokemon *x){
+    if(x->paralisado > 0){
+        x->paralisado--;
+    }
+}
+
+void DiminuiImune(tPokemon *x){
+    if(x->imune > 0){
+        x->imune--;
+    }
+}
+
+void DiminuiAtkDormir(tPokemon *x){
+    if(x->atkDormir > -1){
+        x->atkDormir--;
+    }
+}
+
+void DiminuiCavar(tPokemon *poke){
+    if(poke->cavar > 0){
+        poke->cavar--;
+    }
+}
+
+void Queimar(tPokemon *x){
+    if(x->tipo != fogo){
+        x->queimando = 1;
+    }
+}
+
+void SetDormindo(tPokemon *poke, int x){
+    if(poke->dormindo < x){
+        poke->dormindo = x;
+    }
+}
+
+void SetParalisado(tPokemon *poke, int x){
+    if(poke->paralisado < x){
+        poke->paralisado = x;
+    }
+}
+
+void SetImune(tPokemon *poke, int x){
+    if(poke->imune < x){
+        poke->imune = x;
+    }
+}
+
+void SetAtkDormir(tPokemon *poke, int x){
+    if(poke->atkDormir < x){
+        poke->atkDormir = x;
+    }
+}
+
+int VerificaAtkDormir(tPokemon *x){
+    if(x->atkDormir == 0){
+        return 1;
+    }
+    return 0;
+}
+
+int VerificaCavar(tPokemon *x){
+    if(x->cavar == 1){
+        return 1;
+    }
+    return 0;
+}
+
+int VerificaImune(tPokemon *x){
+    if(x->imune > 0){
+        return 1;
+    }
+    return 0;
+}
+
+void Cavou(tPokemon *x){
+    x->cavar = 1;
+}
+
+void Capturar(List *Pokemons, tPokemon *capiturado){
+    capiturado->HPatual = capiturado->HPmax;
+    capiturado->dormindo = 0;
+    capiturado->paralisado = 0;
+    capiturado->queimando = 0;
+    capiturado->atkDormir = -1;
+    capiturado->imune = 0;
+    capiturado->cavar = 0;
+
+    InserirUlt(Pokemons, capiturado);
+    free(capiturado);
+}
+
+int VerificaParalisado(tPokemon *x){
+    if(x->paralisado){
+        return 1;
+    }
+    return 0;
+}
+
+int VerificaDormindo(tPokemon *x){
+    if(x->dormindo || x->atkDormir > 0){
+        return 1;
+    }
+    return 0;
 }

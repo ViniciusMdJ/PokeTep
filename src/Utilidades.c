@@ -8,7 +8,7 @@
 
 float CriaAleatorio(){
     float aleatorio = (float)rand()/(float)(RAND_MAX);
-    printf("ALEATORIO %f\n", aleatorio);
+    //printf("ALEATORIO %f\n", aleatorio);
     return aleatorio;
 }
 

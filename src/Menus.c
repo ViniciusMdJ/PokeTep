@@ -5,6 +5,7 @@
 #include "../include/Jogador.h"
 #include "../include/Ataques.h"
 #include "../include/Pokemon.h"
+#include "../include/Batalha.h"
 
 int MenuEscolha(List* Lista){
     char op[128];
@@ -23,10 +24,17 @@ int MenuEscolha(List* Lista){
 return escolha;
 }
 
-void MenuPrincipal(char* arqPontuacao,char* arqLogs){
+void MenuPrincipal(char* caminhoPontuacao,char* caminhoLogs){
     char aux[128];
-    int  opcao; 
+    int  opcao, vitoriasPlayer; 
     tJogador *Player;
+    List *pokePlayer;
+    FILE *arqLogs = fopen(caminhoLogs, "w");
+
+    if(arqLogs == NULL){
+        printf("Arquivo de Log's nao foi aberto\n");
+        exit(1);
+    }
 
     while(1){
         Clean();
@@ -40,16 +48,20 @@ void MenuPrincipal(char* arqPontuacao,char* arqLogs){
             opcao = VerificaEntre(aux, 1, 3);
             if(opcao == 1){
                 Player = newPlayer();
-                destroyJogador(Player);
+                vitoriasPlayer = batalha(Player, arqLogs);
+                addNewPontuacao(vitoriasPlayer, ReturnNomeJogador(Player), caminhoPontuacao);
+                getchar();
                 
+                destroyJogador(Player);                
                 break;
             }
             else if(opcao == 2){
-                imprimePontuacao(arqPontuacao);
+                imprimePontuacao(caminhoPontuacao);
                 break;
             }
             else if(opcao == 3){
                 Clean();
+                fclose(arqLogs);
                 return;
             }
             else{
@@ -57,4 +69,30 @@ void MenuPrincipal(char* arqPontuacao,char* arqLogs){
             }
         }
     }
+}
+
+int MenuBatalha(tPokemon *poke, int qtdPokebola){
+    char *op = malloc(sizeof(char) * 129);
+    int escolha;
+
+    printf("Escolha um movimento:\n");
+    printf("1- %s\n", NomedoAtk(poke, 0));
+    printf("2- %s\n", NomedoAtk(poke, 1));
+    printf("3- %s\n", NomedoAtk(poke, 2));
+    printf("4- Tentar capiturar (%d pokebola)\n", qtdPokebola);
+    printf("5- Fugir\n");
+    do{
+        scanf("%s", op);
+        getchar();//pegaro maldito \n q o scan nao le
+        escolha = VerificaEntre(op, 1, 5);
+        if(escolha == 4 && !qtdPokebola){
+            escolha = 0;
+        }
+        if(escolha == 0){
+            printf("Escolha uma opção valida\n");
+        }
+    }while(!escolha);
+
+    free(op);
+    return escolha;
 }

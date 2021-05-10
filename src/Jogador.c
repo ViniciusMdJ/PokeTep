@@ -9,15 +9,9 @@
 
 typedef struct jogador{
     char *nickname;
-    unsigned int qtdPokemon;
     unsigned int qtdPokebola;
-    unsigned int vitorias;
     List *Pokemons; 
 }tJogador;
-
-void imprimeJogador(tJogador *x){
-    printf("nick: %s\nqtdpokemon: %d\nqtdpokebola: %d\nvitorias: %d\n", x->nickname, x->qtdPokemon, x->qtdPokebola, x->vitorias);
-}
 
 tJogador *newPlayer(){
     tJogador *novo;
@@ -38,12 +32,7 @@ tJogador *newPlayer(){
 
     novo->nickname = strdup(nome);
     novo->qtdPokebola = 3;
-    novo->qtdPokemon = 0;
-    novo->vitorias = 0;
     novo->Pokemons = InitIniciais();
-    ImprimeLista(novo->Pokemons);
-    getchar();
-
     free(nome);
     return novo;
 }
@@ -62,4 +51,16 @@ void destroyJogador(tJogador *x){
     free(x->nickname);
     DestroyLista(x->Pokemons);
     free(x);
+}
+
+List *ReturnListaPoke(tJogador *x){
+    return x->Pokemons;
+}
+
+int ReturnqtdPokebola(tJogador *x){
+    return x->qtdPokebola;
+}
+
+char *ReturnNomeJogador(tJogador *x){
+    return x->nickname;
 }

@@ -44,11 +44,15 @@ void Metronomo(void *poke1, void *poke2);
 
 void AutoDestruir(void *poke1, void *poke2);
 
+void DanoCavar(void *poke1, void *poke2);
+
 void inicializaFptrAtaques();
 
 void InicializaFptrPokemons();
 
 void DestroytAtaques(tAtaque *x);
+
+char *ReturnNomeAtk(tAtaque *x, int pos);
 
 fptrInicializaPoke ReturnInicializador(int pos);
 
