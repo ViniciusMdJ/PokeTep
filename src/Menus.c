@@ -29,7 +29,8 @@ void MenuPrincipal(char* caminhoPontuacao,char* caminhoLogs){
     int  opcao, vitoriasPlayer; 
     tJogador *Player;
     List *pokePlayer;
-    FILE *arqLogs = fopen(caminhoLogs, "w");
+    FILE *arqLogs;
+    arqLogs = fopen(caminhoLogs, "w");
 
     if(arqLogs == NULL){
         printf("Arquivo de Log's nao foi aberto\n");

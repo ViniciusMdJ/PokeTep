@@ -56,8 +56,10 @@ int batalha(tJogador *player, FILE *arqLog){
 
                 printf("Um %s selvagem apareceu!\n\n", ReturnNome(maquina));
             }
+            printf("%s vs %s\n\n", ReturnNome(pokeJogador), ReturnNome(maquina));
             getchar();
         }
+
         
         fprintf(arqLog, "%d.%d- %s vs %s\n", qtdPartida, numBatalhas, ReturnNome(pokeJogador), ReturnNome(maquina));
 
