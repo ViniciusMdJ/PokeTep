@@ -71,18 +71,6 @@ void imprimePontuacao(char *caminho){
     getchar();
 }
 
-static void destroyPontuacao(tPontuacao *x){
-    tPontuacao *next;
-    next = x->prox;
-    free(x);
-    while(next != NULL){
-        x = next;
-        next = next->prox;
-        free(x->nickname);
-        free(x);
-    }
-}
-
 void addNewPontuacao(int partidas, char *nick, char *caminho){
     tPontuacao *lista = LeArquivo(caminho);
 
@@ -103,6 +91,18 @@ void addNewPontuacao(int partidas, char *nick, char *caminho){
     salvaPontuacao(lista, caminho);
     destroyPontuacao(lista);
 
+}
+
+static void destroyPontuacao(tPontuacao *x){
+    tPontuacao *next;
+    next = x->prox;
+    free(x);
+    while(next != NULL){
+        x = next;
+        next = next->prox;
+        free(x->nickname);
+        free(x);
+    }
 }
 
 static void salvaPontuacao(tPontuacao *x, char *caminho){
