@@ -88,6 +88,7 @@ int batalha(tJogador *player, FILE *arqLog){
                             if(random <= (1.0/16.0)){
                                 LogFugir(arqLog, 1);
                                 HpMaquina = &i;
+                                numBatalhas++;
                                 printf("Sucesso\n\n");
                                 getchar();
                                 break;
@@ -111,6 +112,7 @@ int batalha(tJogador *player, FILE *arqLog){
                                     HpMaquina = &i;
                                     qtdPokebola--;
                                     qtdVitorias++;
+                                    numBatalhas++;
                                     random = CriaAleatorio();
                                     if(random <= (ultimaPokebola/12.0)){
                                         qtdPokebola++;
