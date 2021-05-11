@@ -1,9 +1,1 @@
-1.1- Mew vs Picachu
-	Mew usa Auto Destruir
-	Mew: 0% HP 
-	Picachu: 43% HP 
-
-	vinicius perde!
-
-	Fim do jogo 1 vinicius sebreviveu 0 batalhas
-
+1.1- Picachu vs Picachu

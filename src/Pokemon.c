@@ -123,7 +123,7 @@ List* InitIniciais(){
     tPokemon *retirado;
     int opcao;
     
-    for(i=0; i<1; i++){
+    for(i=0; i<3; i++){
         opcao = MenuEscolha(iniciais);
         retirado = (tPokemon*)BuscaRetorna(iniciais, opcao);
         InserirUlt(escolhidos, retirado);
