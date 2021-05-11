@@ -176,7 +176,7 @@ int batalha(tJogador *player, FILE *arqLog){
                         }
                     }
                     else{
-                        printf("O seu Pokemon esta imposibilitado de atacar(paralisado e/ou dormindo\n\n");
+                        printf("O seu Pokemon esta imposibilitado de atacar(paralisado e/ou dormindo)\n\n");
                         getchar();
                     }
                 }
@@ -248,7 +248,7 @@ int batalha(tJogador *player, FILE *arqLog){
                         LogAtaqueMaquina(arqLog, maquina, pokeJogador, randMaquina);
                     }
                     else{
-                        printf("O Pokemon selvagem esta imposibilitado de atacar(paralisado e/ou dormindo\n\n");
+                        printf("O Pokemon selvagem esta imposibilitado de atacar(paralisado e/ou dormindo)\n\n");
                         getchar();
                     }
                 }
