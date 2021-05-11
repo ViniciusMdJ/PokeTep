@@ -14,8 +14,8 @@ typedef struct TipoPoke {
 } tTipoPoke;
 
 typedef struct Lista{
-	tTipoPoke* primeiro; 			// Ponteiro para o primeiro
-	tTipoPoke* ultimo;			// Ponteiro para o ultimo
+	tTipoPoke* primeiro; 	// Ponteiro para o primeiro
+	tTipoPoke* ultimo;		// Ponteiro para o ultimo
 	freeData freeFunc;		// Ponteiro para funcao free
     int tamanho;
 } List;

@@ -8,9 +8,11 @@
 #include <time.h>
 
 int main(int argc, char *argv[]){
-    srand(time(0));
-    char* CaminhoPont = strdup("data/pontuacao.txt");
-    char* CaminhoLogs = strdup("data/Logs.txt");
+    
+    char* CaminhoPont = strdup(argv[1]);
+    char* CaminhoLogs = strdup(argv[2]);
+    int semente = atoi(argv[3]);
+    srand(semente);
 
 
     inicializaFptrAtaques();

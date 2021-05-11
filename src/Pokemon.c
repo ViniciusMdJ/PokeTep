@@ -34,7 +34,7 @@ tPokemon *ListaPoke(int i){
         Poke->tipo = eletrico;
         Poke->ataque = 110;
         Poke->defesa = 100;
-        Poke->nome = strdup("Picachu");
+        Poke->nome = strdup("Pikachu");
         Poke->HPmax = 200;
         Poke->HPatual = Poke->HPmax;
         Poke->Movimentos = funcao();
@@ -148,14 +148,12 @@ void DestroyPokemon(void* Pokemon){
 }
 
 void CausarDano(tPokemon *poke, float dano){
-    //printf("VIDA ANTES %f\n", poke->HPatual);
     if(poke->HPatual >= dano){
         poke->HPatual -= dano;
     }
     else{
         poke->HPatual = 0;
     }
-    //printf("VIDA DEPOIS %f\n", poke->HPatual);
 }
 
 float VerificaRelacao(tPokemon *poke1, tPokemon *poke2){
@@ -293,17 +291,17 @@ void Cavou(tPokemon *x){
     x->cavar = 1;
 }
 
-void Capturar(List *Pokemons, tPokemon *capiturado){
-    capiturado->HPatual = capiturado->HPmax;
-    capiturado->dormindo = 0;
-    capiturado->paralisado = 0;
-    capiturado->queimando = 0;
-    capiturado->atkDormir = -1;
-    capiturado->imune = 0;
-    capiturado->cavar = 0;
+void Capturar(List *Pokemons, tPokemon *capturado){
+    capturado->HPatual = capturado->HPmax;
+    capturado->dormindo = 0;
+    capturado->paralisado = 0;
+    capturado->queimando = 0;
+    capturado->atkDormir = -1;
+    capturado->imune = 0;
+    capturado->cavar = 0;
 
-    InserirUlt(Pokemons, capiturado);
-    free(capiturado);
+    InserirUlt(Pokemons, capturado);
+    free(capturado);
 }
 
 int VerificaParalisado(tPokemon *x){

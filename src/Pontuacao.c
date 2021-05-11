@@ -51,6 +51,7 @@ void imprimePontuacao(char *caminho){
     FILE *arq;
     arq = fopen(caminho, "r");
 
+    Clean();
     if(arq == NULL){
         printf("Nenhum historico de pontuação existente neste arquivo\n");
         getchar();
@@ -60,7 +61,6 @@ void imprimePontuacao(char *caminho){
     tPontuacao *next, *lista = LeArquivo(caminho);
     int i=1;
 
-    Clean();
     for(next = lista->prox; next != NULL; next = next->prox){
         printf("\t%d- %s: %d\n", i, next->nickname, next->partidas);
         i++;
@@ -69,18 +69,6 @@ void imprimePontuacao(char *caminho){
     fclose(arq);
     destroyPontuacao(lista);
     getchar();
-}
-
-static void destroyPontuacao(tPontuacao *x){
-    tPontuacao *next;
-    next = x->prox;
-    free(x);
-    while(next != NULL){
-        x = next;
-        next = next->prox;
-        free(x->nickname);
-        free(x);
-    }
 }
 
 void addNewPontuacao(int partidas, char *nick, char *caminho){
@@ -103,6 +91,18 @@ void addNewPontuacao(int partidas, char *nick, char *caminho){
     salvaPontuacao(lista, caminho);
     destroyPontuacao(lista);
 
+}
+
+static void destroyPontuacao(tPontuacao *x){
+    tPontuacao *next;
+    next = x->prox;
+    free(x);
+    while(next != NULL){
+        x = next;
+        next = next->prox;
+        free(x->nickname);
+        free(x);
+    }
 }
 
 static void salvaPontuacao(tPontuacao *x, char *caminho){
