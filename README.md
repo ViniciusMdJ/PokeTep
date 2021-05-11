@@ -23,7 +23,7 @@ Biblioteca dedicada a criar e manipular o struct Lista, contendo as funcoes de s
 
 ### Pokemon.h
 Biblioteca encarregada de alterar, retornar e checar os status do struct tPokemon.
-Para criar o código de acordo com os pedidos foram utilizados os seguintes status dentro do struct tPokemon:
+Para criar o código de acordo com os pedidos foram utilizados os seguintes status dentro do struct tPokemon:    
 Dormindo: Status referente ao Pokemon não poder atacar por estar dormindo.
 Queimando: Status referente ao dano levado a cada turno por estar queimando.
 Paralisado: Status referente ao Pokemon não poder atacar por estar Paralisado.
