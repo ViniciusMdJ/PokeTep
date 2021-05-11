@@ -34,7 +34,7 @@ tPokemon *ListaPoke(int i){
         Poke->tipo = eletrico;
         Poke->ataque = 110;
         Poke->defesa = 100;
-        Poke->nome = strdup("Picachu");
+        Poke->nome = strdup("Pikachu");
         Poke->HPmax = 200;
         Poke->HPatual = Poke->HPmax;
         Poke->Movimentos = funcao();
